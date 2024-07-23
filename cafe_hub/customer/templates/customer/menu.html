@@ -1,0 +1,179 @@
+{% extends 'customer/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+.left-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        background-color: #f1e0b5;
+      }
+
+      .left-side img {
+        display: block;
+        margin-bottom: 10px;
+        width: 50px;
+      }
+      body {
+        background-color: #f1e0b5;
+        margin: 0;
+        font-family: Roboto, sans-serif;
+      }
+</style>
+
+
+<h1> Menu</h1>
+<div class="left-side">
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+  </div>
+
+{% if menu_list %}
+    <ul>
+      {% for menuitem in menu_list %}
+      <li>
+        <a href="{{ menuitem.get_absolute_url }}">{{ menuitem.name}}</a>
+        ({{menuitem.price}})
+      </li>
+      {% endfor %}
+    </ul>
+      {% else %}
+    <p>There are no books in the library.</p>
+  {% endif %}
+
+ 
+                    {% for food in menu_list %}
+                    <div class="row">
+                        
+                            <img class="rounded" src="{{ app.image.url }}" width="150" height="100"/>
+                        </div>
+                        
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ app.pk }}">
+                                    <label class="form-check-label">{{ food.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5">{{ food.price }}</p>
+                            </div>
+                            <p>{{ app.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                {% endfor %}
+                </div>
+
+                <div class="pt-5">
+                    {% for food in foods %}
+                  
+                            <img class="rounded" src="{{ entre.image.url }}" width="150" height="100"/>
+                        </div>
+                        
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ entre.pk }}">
+                                    <label class="form-check-label">{{ food.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5">{{ food.price }}</p>
+                            </div>
+                            <p>{{ entre.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+
+                <div class="pt-5">
+                    {% for dessert in desserts %}
+                    
+                            <img class="rounded" src="{{ dessert.image.url }}" width="150" height="100"/>
+                        </div>
+                      
+                            
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ dessert.pk }}">
+                                    <label class="form-check-label">{{ dessert.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5">{{ dessert.price }}</p>
+                            </div>
+                            <p>{{ dessert.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+
+                <div class="pt-5">
+                    {% for drink in drinks %}
+                   
+                            <img class="rounded" src="{{ drink.image.url }}" width="150" height="100"/>
+                        </div>
+                       
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ drink.pk }}">
+                                    <label class="form-check-label">{{ drink.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5">{{ drink.price }}</p>
+                            </div>
+                            <p>{{ drink.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+
+                <button class="btn btn-dark mt-5">Place Order!</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

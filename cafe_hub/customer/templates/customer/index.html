@@ -1,0 +1,63 @@
+{% extends 'customer/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+
+.global-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    margin-top: 225px;
+}
+
+.sign-in-body {
+    text-align: center;  
+}
+
+form {
+    padding-top: 10px;
+    font-size: 14px;
+    margin-top: 30px;
+}
+
+
+.btn-signup, .btn-guest {
+    margin-top: 20px;  
+    margin:5px;
+    background-color:#FF9AA2;
+   
+}
+
+.btn-signup:hover, .btn-guest:hover{
+    color:#FFD3B4;
+}
+
+
+</style>
+<div class="global-container">
+    <div class="sign-in-body">
+        <h1>Coffee Shop Ordering Service</h1>
+        <h2>Sign up now for free food</h2>
+        <form>
+            <div class="form-group">
+                <label for="name1">Name</label>
+                <input type="text" class="form-control form-control-sm" id="name1" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control form-control-sm" id="exampleInputPassword1">
+            </div>
+            
+        </form>
+        <div class="buttons">
+            <button onclick="window.location.href='menu/';" class="btn btn-signup">Order Now</button>
+            
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; 
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #FFD3B4; 
+    color: #837E9F; 
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 200px;  
+}
+
+.form-logout button, .btn {
+    padding: 10px 20px;
+    color: #FFF; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none; 
+    transition: background 0.3s, transform 0.3s;
+}
+
+.form-logout button {
+    background-color: #FF9AA2; 
+    margin-right: 10px;  
+}
+
+.form-logout button:hover, .btn:hover {
+    transform: translateY(-2px);  
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn {
+    background-color: #B5EAD7;  
+    margin-left: 10px;  
+}
+
+.app-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px; 
+}
+
+.app {
+    background-color: white;
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 15px;
+    width: 300px;
+    text-align: center;
+    border-radius: 5px;
+    color: #837E9F; 
+    display: block;
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+.app:hover {
+    background-color: #E2F0CB; 
+    color: #5A5A5A;  
+}
