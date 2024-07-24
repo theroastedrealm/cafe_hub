@@ -1,0 +1,328 @@
+{% comment %} 
+
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FFD3B4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 40px;
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        position: relative;
+      }
+
+      h2 {
+        color: #837E9F;
+        text-align: center;
+        font-weight: 300;
+      }
+
+      .column {
+        width: 45%;
+        margin: 20px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #f1f1f1;
+        margin: 15px 0;
+        padding: 15px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.3s ease;
+      }
+
+      li.available {
+        background-color: #B5EAD7;
+      }
+
+      li.unavailable {
+        background-color: #FF9AA2;
+      }
+
+      button, .top-right-button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+      }
+
+      button:hover, .top-right-button:hover {
+        background-color: #0056b3;
+      }
+
+      .top-right-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .form-container {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-container label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .form-container input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        width: 100%;
+      }
+
+      .not-logged-in {
+        text-align: center;
+        margin-top: 20px;
+        color: #d9534f;
+      }
+
+      .section-title {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        font-weight: 300;
+        color: #555;
+      }
+
+      form {
+        display: inline;
+      }
+    .availability_button {
+        background-color: #B5EAD7;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        
+        font-size: 14px;
+        font-weight: bold;
+        border: 2px solid black; /* Added black outline */
+    }
+
+    .delete_seat {
+        background-color: #FFD3D3;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        
+        font-size: 14px;
+        font-weight: bold;
+        border: 2px solid black; /* Added black outline */
+    }
+      
+  </style>
+</html> {% endcomment %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Management</title>
+    <style>
+        body {
+            background-color: #f1e0b5;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #8b4513;
+            color: white;
+            border: 3px solid #3e2723;
+            position: relative;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .top-right-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #3e2723;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .top-right-button:hover {
+            background-color: #f1e0b5;
+            transform: scale(1.1);
+            color: #3e2723;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .column {
+            flex: 1;
+            padding: 10px;
+            margin: 10px;
+            background-color: #fff8dc;
+            border: 1px solid #3e2723;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .section-title {
+            text-align: center;
+            background-color: #8b4513;
+            color: white;
+            margin: 0;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .column ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .column ul li {
+            padding: 10px;
+            background-color: #f1e0b5;
+            margin-bottom: 5px;
+            border: 1px solid #3e2723;
+            border-radius: 5px;
+        }
+
+        .column ul li form {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to our Cafe</h1>
+        {% block login %}
+        <div>
+            {% if user.is_authenticated %} 
+                <form method="post" action="{% url 'logout' %}"> 
+                    {% csrf_token %}
+                    <button class="top-right-button" type="submit">Logout</button>
+                </form> 
+            {% else %} 
+                <a class="top-right-button" href="{% url 'login' %}">Login</a> 
+            {% endif %}
+        </div>
+        {% endblock %}
+    </div>
+
+    <div class="main-content">
+        <div class="column available">
+            <h2 class="section-title">Seats</h2>
+            <ul>
+                {% for seat in seats %}
+                <li>
+                    {{ seat.name }} : {% if seat.available %} Available! {% else %} Unavailable! {% endif %}
+                    <form action="{% url 'staff_update_seat_availability' seat.id %}" method="POST">
+                        {% csrf_token %}
+                        <button class="availability_button" type="submit">{% if seat.available %} Make Unavailable {% else %} Make Available {% endif %}</button>
+                    </form>
+                    <form action="{% url 'staff_delete_seat' seat.id %}" method="POST">
+                        {% csrf_token %}
+                        <button class="delete_seat" type="submit" name="seat_id">Delete Seat</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="column add-seat">
+            <h2 class="section-title">Add Seat</h2>
+            <form action="{% url 'staff_add_seat' %}" method="post">
+                {% csrf_token %}
+                <label for="name">Name:</label>
+                <input type="text" id="seat_name" name="seat_name" required>
+                <button type="submit">Add Seat</button>
+            </form>
+        </div>
+
+        <div class="column home-link">
+            <h2 class="section-title">Navigation</h2>
+            <p>Back to home page <a href="/">here</a></p>
+        </div>
+    </div>
+</body>
+</html>
