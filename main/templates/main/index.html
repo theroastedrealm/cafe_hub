@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Menu</title>
+    <link rel="stylesheet" href="{% static 'main/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f1e0b5; 
+    margin: 0;
+    padding: 0;
+    background-position : center; 
+       
+}
+
+.header {
+    background-color: #8b4513;
+    color: white; 
+    border: 3px solid #3e2723;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+h1 {
+    margin: 0;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 200px;  
+}
+
+.form-logout button, .btn {
+    padding: 10px 20px;
+    color: #FFF; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none; 
+    transition: background 0.3s, transform 0.3s;
+}
+
+.form-logout button {
+    background-color: #3e2723;
+    margin-right: 10px;  
+}
+
+.form-logout button:hover, .btn:hover {
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn {
+    background-color: #3e2723;
+    margin-left: 10px;  
+}
+
+.app-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px; 
+}
+
+.app {
+    background-color: white;
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    border-radius: 10px;
+    color: #837E9F; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.app:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    background-color: #f8f9fa; 
+}
+
+.app i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+
+    </style>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div class="header">
+        <h1>Welcome to {{ branch.name }}'s App Center, {{ user.username }}</h1>
+        <div class="button-container">
+            <form method="POST" action="{% url 'logout' %}" class="form-logout">
+                {% csrf_token %}
+                <button type="submit">Log Out</button>
+            </form>
+            {% if user.is_superuser or user_role == 'admin' %}
+            <a href="{% url 'create_branch' %}" class="btn">Create a New Branch</a>
+            <a href="{% url 'redirect_to_admin' %}" class="btn btn-primary">Go to Admin Interface</a>
+            {% endif %}        
+        </div>
+    </div>    
+    <div class="app-grid">
+        {% if user_role != 'customer' %}
+        <a href="{% url 'Menu' %}" class="app">
+            <i class="fas fa-book"></i>
+            App 1 - Pre-order food/drink 
+        </a>
+        <a href="{% url 'homepage' %}" class="app">
+            <i class="fas fa-chair"></i>
+            App 2 - Seating Availability
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-coffee"></i>
+            App 3 -  Preferred Items by Customers
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-music"></i>
+            App 4 -  Playlist Upload
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-shopping-cart"></i> 
+            App 5 -  Purchase your favorite's Cafe's Coffee... and other items    
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-exclamation"></i> 
+            App 6 -  Specials of the DAY
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-tasks"></i> 
+            App 7 -  Inventory Checklist
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-boxes"></i> 
+            App 8 -  Cafe Entry Point for employers / employees of cafes 
+        </a>
+
+        </a>
+        {% elif user_role == 'customer' %}
+        <a href="#" class="app">
+            <i class="fas fa-book"></i>
+            App 1 - Pre-order food/drink 
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-tasks"></i>
+            App 2 - Seating Availability
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-chalkboard-teacher"></i>
+            App 3 -  Preferred Items by Customers
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-chalkboard-teacher"></i>
+            App 4 -  Playlist Upload
+        </a>
+        {% endif %}
+    </div>
+    {% else %}
+        <p>Please <a href="combined_auth.html">sign up or log in</a> to access the dashboard.</p>
+    {% endif %}
+</body>
+</html>
