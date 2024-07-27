@@ -17,12 +17,21 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path,include
+from customer.views import Menu
+from inventory.views import Dashboard
 from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('main.urls')), 
     path('', views.index, name='index'),
-    path('coffee_order/',include('customer.urls')),
-    path('seating/',include('seating_main.urls'))
+    path('menu/',include('customer.urls')),
+    path('seating/',include('seating_main.urls')),
+    path('inventory/', include('inventory.urls')),
+    #path('branch/<int:pk>/', views.branch_detail, name='branch_detail'),
+    path('inventory_management/', include('inventory_management.urls')),
+    #path('branch/<int:pk>/menu/', Menu.as_view(), name='menu'),
+    #path('branch/<int:pk>/inventory/',Dashboard.as_view() , name='inventory'),
 ]
+
+

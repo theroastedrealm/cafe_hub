@@ -1,7 +1,8 @@
 from django.db import models
-from django.core.management.base import BaseCommand
-from django.contrib.auth.models import AbstractUser , Group, Permission
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import AbstractUser , Group
+
+
+
 
 
 
@@ -12,6 +13,7 @@ class Branch(models.Model):
     address = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=200, blank=True, null=True)
     zip_code = models.CharField(max_length=10,blank=True, null=True)  
+    
     
 
     def __str__(self):

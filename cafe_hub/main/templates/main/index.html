@@ -59,7 +59,7 @@ h1 {
 }
 
 .btn {
-    background-color: #B5EAD7; 
+    background-color: #3e2723;
     margin-left: 10px;  
 }
 
@@ -112,7 +112,7 @@ h1 {
             </form>
             {% if user.is_superuser or user_role == 'admin' %}
             <a href="{% url 'create_branch' %}" class="btn">Create a New Branch</a>
-           
+            <a href="{% url 'redirect_to_admin' %}" class="btn btn-primary">Go to Admin Interface</a>
             {% endif %}        
         </div>
     </div>    
@@ -130,7 +130,7 @@ h1 {
             <i class="fas fa-coffee"></i>
             App 3 -  Preferred Items by Customers
         </a>
-        <a href="#" class="app">
+        <a href="{% url 'dashboard' %}" class="app">
             <i class="fas fa-music"></i>
             App 4 -  Playlist Upload
         </a>
@@ -142,7 +142,7 @@ h1 {
             <i class="fas fa-exclamation"></i> 
             App 6 -  Specials of the DAY
         </a>
-        <a href="#" class="app">
+        <a href="{% url 'dashboard' %}" class="app">
             <i class="fas fa-tasks"></i> 
             App 7 -  Inventory Checklist
         </a>
@@ -153,20 +153,20 @@ h1 {
 
         </a>
         {% elif user_role == 'customer' %}
-        <a href="#" class="app">
+        <a href="{% url 'menu' %}" class="app">
             <i class="fas fa-book"></i>
             App 1 - Pre-order food/drink 
         </a>
-        <a href="#" class="app">
-            <i class="fas fa-tasks"></i>
+        <a href="{% url 'homepage' %}" class="app">
+            <i class="fas fa-chair"></i>
             App 2 - Seating Availability
         </a>
         <a href="#" class="app">
-            <i class="fas fa-chalkboard-teacher"></i>
+            <i class="fas fa-coffee"></i>
             App 3 -  Preferred Items by Customers
         </a>
-        <a href="#" class="app">
-            <i class="fas fa-chalkboard-teacher"></i>
+        <a href="{% url 'dashboard' %}" class="app">
+            <i class="fas fa-music"></i>
             App 4 -  Playlist Upload
         </a>
         {% endif %}

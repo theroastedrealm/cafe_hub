@@ -40,7 +40,12 @@ INSTALLED_APPS = [
     'main',
     'customer',
     'seating_main',
+    "inventory",
+    "inventory_management",
+    'crispy_forms',
+    'crispy_bootstrap4',
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -126,3 +131,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOW_INVENTORY_THRESHOLD = 5

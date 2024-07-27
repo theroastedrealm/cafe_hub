@@ -2,7 +2,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
-
+from django.urls import reverse
 from .decorators import unauthenticated_user
 from main.models import Branch
 from .forms import SignUpForm
@@ -10,7 +10,7 @@ from .forms import BranchForm
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
-from django.db.models import Q 
+
 
 @unauthenticated_user
 def login_view(request):
@@ -38,11 +38,11 @@ def signup_view(request):
 
             role = signup_form.cleaned_data['role']
             if role == 'Customer':
-                group = Group.objects.get(name='Customer')
+                group = Group.objects.get(name='customer')
             elif role == 'Uber-User':
-                group = Group.objects.get(name='Uber-user')
+                group = Group.objects.get(name='uber-user')
             elif role == 'Admin':
-                group = Group.objects.get(name='Admin')
+                group = Group.objects.get(name='admin')
             else:
                 group = None
 
@@ -133,3 +133,7 @@ def branch_detail(request, branch_id):
         user_role = 'unknown'
     
     return render(request, 'main/index.html', {'branch': branch, 'user_role': user_role})
+
+@user_passes_test(is_admin)
+def redirect_to_admin(request):
+    return redirect(reverse('admin:main_customuser_changelist'))

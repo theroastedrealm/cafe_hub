@@ -1,9 +1,10 @@
 
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views import View 
 from django.views import generic
 
-from customer.models import MenuItem, OrderModel
+from main.models import Branch
+from customer.models import MenuItem
 # Create your views here.
 
 class Index(View):
@@ -15,8 +16,10 @@ class Index(View):
 class Menu(generic.ListView):
     model = MenuItem
     context_object_name = 'menu_list'   
-    queryset = MenuItem.objects.all()
-    template_name = 'customer/menu.html'  
+    #queryset = MenuItem.objects.all()
+    template_name = 'customer/menu.html'
+      
+
 
 class Order(View): 
     model=MenuItem
@@ -38,4 +41,3 @@ class Order(View):
 
         return render(request, 'customer/menu.html',context)
     
-   
