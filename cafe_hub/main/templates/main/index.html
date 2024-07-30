@@ -117,7 +117,38 @@ h1 {
         </div>
     </div>    
     <div class="app-grid">
-        {% if user_role != 'customer' %}
+        {% if user_role == 'customer' %}
+        <a href="{% url 'Menu' %}" class="app">
+            <i class="fas fa-book"></i>
+            App 1 - Pre-order food/drink 
+        </a>
+        <a href="{% url 'homepage' %}" class="app">
+            <i class="fas fa-chair"></i>
+            App 2 - Seating Availability
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-coffee"></i>
+            App 3 -  Preferred Items by Customers
+        </a>
+        <a href="{% url 'dashboard' %}" class="app">
+            <i class="fas fa-music"></i>
+            App 4 -  Playlist Upload
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-shopping-cart"></i> 
+            App 5 -  Purchase your favorite's Cafe's Coffee... and other items    
+        </a>
+        <a href="#" class="app">
+            <i class="fas fa-exclamation"></i> 
+            App 6 -  Specials of the DAY
+        </a>
+        <a href="{% url 'dashboard' %}" class="app">
+            <i class="fas fa-tasks"></i> 
+            App 7 -  Inventory Checklist
+        </a>
+
+        </a>
+        {% elif user_role != 'customer' %}
         <a href="{% url 'Menu' %}" class="app">
             <i class="fas fa-book"></i>
             App 1 - Pre-order food/drink 
@@ -149,25 +180,6 @@ h1 {
         <a href="#" class="app">
             <i class="fas fa-boxes"></i> 
             App 8 -  Cafe Entry Point for employers / employees of cafes 
-        </a>
-
-        </a>
-        {% elif user_role == 'customer' %}
-        <a href="{% url 'Menu' %}" class="app">
-            <i class="fas fa-book"></i>
-            App 1 - Pre-order food/drink 
-        </a>
-        <a href="{% url 'homepage' %}" class="app">
-            <i class="fas fa-chair"></i>
-            App 2 - Seating Availability
-        </a>
-        <a href="#" class="app">
-            <i class="fas fa-coffee"></i>
-            App 3 -  Preferred Items by Customers
-        </a>
-        <a href="{% url 'dashboard' %}" class="app">
-            <i class="fas fa-music"></i>
-            App 4 -  Playlist Upload
         </a>
         {% endif %}
     </div>
