@@ -38,10 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'customer',
+    'preOrderApp',
     'seating_main',
     "inventory",
-    "inventory_management",
     'crispy_forms',
     'crispy_bootstrap4',
 ]

@@ -23,6 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('main.urls')), 
     path('', views.index, name='index'),
-    path('coffee_order/',include('customer.urls')),
+    path('coffee_order/',include('preOrderApp.urls')),
     path('seating/',include('seating_main.urls'))
 ]

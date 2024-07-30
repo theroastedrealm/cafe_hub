@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
 from .models import InventoryItem, Category
 from .forms import InventoryItemForm
-from inventory_management.settings import LOW_INVENTORY_THRESHOLD
+from cafe_hub.settings import LOW_INVENTORY_THRESHOLD
 from django.contrib import messages
 
 class Index(TemplateView):
