@@ -132,7 +132,13 @@ def branch_detail(request, branch_id):
     else:
         user_role = 'unknown'
     
-    return render(request, 'main/index.html', {'branch': branch, 'user_role': user_role})
+
+    context = {
+        'branch': branch,
+        'user_role': user_role
+        }
+    
+    return render(request, 'main/index.html', context)
 
 @user_passes_test(is_admin)
 def redirect_to_admin(request):

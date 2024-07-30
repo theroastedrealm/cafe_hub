@@ -5,11 +5,11 @@ from django.contrib import messages
 from .models import Seat
 from .decorators import allowed_users
 
-def homepage(request):
-    items = Seat.objects.all()
+def homepage(request, branch_id):
+    items = Seat.objects.filter(branch=branch_id)
     try:
         booked_seats = Seat.objects.filter(user=request.user)
-        unavailable_seats = Seat.objects.filter(available=False).exclude(user=request.user)
+        unavailable_seats = Seat.objects.filter(available=False, branch=branch_id).exclude(user=request.user)
     except:
         booked_seats = None
         unavailable_seats = None
@@ -38,7 +38,7 @@ def update_seat_availability(request, seat_id):
                 seat.available = True
                 seat.user = None
             seat.save()
-            return redirect("/seating/")
+            return redirect("/seating")
         else:
             messages(request, "You need to be logged in to book a seat")
             return redirect("/")
