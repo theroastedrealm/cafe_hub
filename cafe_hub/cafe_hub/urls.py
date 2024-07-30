@@ -23,11 +23,13 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('accounts/', include('main.urls')), 
-    path('', include('main.urls')),
+    # path('accounts/', include('main.urls')),
+    path('', views.branchesView, name='index'),
+    path('branch/', include('main.urls')),
     path('menu/',include('preOrderApp.urls')),
     path('seating/',include('seating_main.urls')),
     path('inventory/', include('inventory.urls')),
+    
     #path('branch/<int:pk>/', views.branch_detail, name='branch_detail'),
     #path('branch/<int:pk>/menu/', Menu.as_view(), name='menu'),
     #path('branch/<int:pk>/inventory/',Dashboard.as_view() , name='inventory'),

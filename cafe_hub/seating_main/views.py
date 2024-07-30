@@ -38,7 +38,7 @@ def update_seat_availability(request, seat_id):
                 seat.available = True
                 seat.user = None
             seat.save()
-            return redirect("/seating")
+            return render(request, "seating_main/home.html", {"seats": Seat.objects.all()})
         else:
             messages(request, "You need to be logged in to book a seat")
             return redirect("/")
