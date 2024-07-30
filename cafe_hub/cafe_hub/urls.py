@@ -23,8 +23,8 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('main.urls')), 
-    path('', views.index, name='index'),
+    # path('accounts/', include('main.urls')), 
+    path('', include('main.urls')),
     path('menu/',include('preOrderApp.urls')),
     path('seating/',include('seating_main.urls')),
     path('inventory/', include('inventory.urls')),

@@ -1,0 +1,24 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content%}
+    <div>
+        <h1>Branches</h1>
+        <div>            
+            {% for branch in branches %}
+            <ul>
+                <li>{{ branch.name }}</li>
+                <li>{{ branch.address }}</li>
+                <li>{{ branch.city }}</li>
+                <li>{{ branch.zip_code }}</li>
+                <li><a href="{% url 'branch_detail' branch.id %}">{{ branch.name }}</a></li>
+            </ul>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock%}
+
+
+<style>
+
+</style>

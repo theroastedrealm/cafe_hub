@@ -137,3 +137,8 @@ def branch_detail(request, branch_id):
 @user_passes_test(is_admin)
 def redirect_to_admin(request):
     return redirect(reverse('admin:main_customuser_changelist'))
+
+
+def branchesView(request):
+    branches = Branch.objects.all()
+    return render(request, 'main/branches.html', {'branches': branches})
