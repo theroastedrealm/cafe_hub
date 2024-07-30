@@ -258,9 +258,12 @@
         <div class="column unavailable">
           <h2 class="section-title">Unavailable Seats</h2>
           <ul>
-            {% for seat in seats %} {% if not seat.available %}
+            {% if user.is_authenticated %} {% for seat in unavailable_seats %}
             <li>{{ seat.name }} Unavailable!</li>
-            {% endif %} {% endfor %}
+            {% endfor %} {% else %} {% for seat in seats %} 
+            {% if not seat.available %}
+            <li>{{ seat.name }} Unavailable!</li>
+            {% endif %} {% endfor %} {% endif %}
           </ul>
         </div>
 
