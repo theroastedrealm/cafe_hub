@@ -46,8 +46,8 @@ def signup_view(request):
             else:
                 group = None
 
-            if group:
-                user.groups.add(group)
+            user.groups.add(group)
+            user.save()
 
             login(request, user)
             return redirect('search')
