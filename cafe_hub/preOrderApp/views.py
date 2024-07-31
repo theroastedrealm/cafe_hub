@@ -9,7 +9,7 @@ from preOrderApp.models import MenuItem
 
 class Index(View):
     def get(self, request, *args,**kwarfgs):
-        return render(request, "templates/customer/index.html")
+        return render(request, "customer/index.html")
 
 
 
@@ -17,7 +17,7 @@ class Menu(generic.ListView):
     model = MenuItem
     context_object_name = 'menu_list'   
     #queryset = MenuItem.objects.all()
-    template_name = 'templates/customer/menu.html'
+    template_name = 'customer/menu.html'
       
 
 
@@ -25,7 +25,7 @@ class Order(View):
     model=MenuItem
     context_object_name='food_list'
     queryset = non_coffee=MenuItem.objects.filter(category__name__contains='Food')
-    template_name = 'templates/customer/menu.html'  
+    template_name = 'customer/menu.html'  
 
     def get(self, request, *args,**kwarfgs):
         non_coffee=MenuItem.objects.filter(category__name__contains='Non-Coffee')
@@ -39,5 +39,5 @@ class Order(View):
             'food':food,
         }
 
-        return render(request, 'templates/customer/menu.html',context)
+        return render(request, 'customer/menu.html',context)
     
