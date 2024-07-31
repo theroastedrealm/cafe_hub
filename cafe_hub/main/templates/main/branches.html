@@ -2,20 +2,50 @@
 {% load static %}
 
 {% block content%}
+<style>
+body {
+    background-color: #f1e0b5; 
+    margin: 0;
+    padding: 0;
+    background-position : center; 
+    
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    flex: 1;
+}
+.branch_containers{
+    
+    border-radius: 3px;
+    padding: 10px;
+    width: calc(15% - 70px);
+    border: 1px solid #ccc;
+}
+.search_container{
+    padding: 10px 20px;
+    border-top: 1px solid #ccc;
+}
+
+</style>
     <div>
-        <h1>Branches</h1>
+        <h1>Coffee Shops</h1>
         <div classname="container">            
             {% for branch in branches %}
-            <ul>
+            <div class="branch_containers">
+            
                 <li><a href="{% url 'branch_detail' branch.id %}">{{ branch.name }}</a></li>
                 <li>{{ branch.address }}</li>
                 <li>{{ branch.city }}</li>
                 <li>{{ branch.zip_code }}</li>
-            </ul>
+            
+            </div>
             {% endfor %}
         </div>
-    <div>
-        <p>Cant see your branch? <a href={%url 'search'%}>Press here to search</a></p>
+    <div class="search_container">
+        <p>Can't see your Coffee Shop? <a href={%url 'search'%}>Press here to search</a></p>
     </div>
     </div>
 {% endblock%}
