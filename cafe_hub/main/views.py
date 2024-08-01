@@ -19,8 +19,7 @@ def login_view(request):
         if login_form.is_valid():
             user = login_form.get_user()
             login(request, user)
-            next_url = request.GET.get('next', 'search')
-            return redirect(next_url)
+            
         else:
             print(login_form.errors)
     else:
@@ -50,7 +49,11 @@ def signup_view(request):
             user.save()
 
             login(request, user)
-            return redirect('search')
+            if get_user_role== 'customer':
+                next_url = request.GET.get('next', 'search')
+            else:
+                next_url = request.GET.get('next', 'create_branch')
+            return redirect(next_url)
     else:
         signup_form = SignUpForm()
 
@@ -100,9 +103,11 @@ def search(request):
 
 @login_required
 def index(request):
-    user_branch = request.user.branch
+    user_branch = getattr(request.user, 'branch', None) 
+    #user_branch = request.user.branch
     context = {
-        'user_role': request.user.role,
+        'user_role': getattr(request.user, 'role', None),
+        #'user_role': request.user.role,
         'user_branch': user_branch
     }
     
@@ -148,3 +153,9 @@ def redirect_to_admin(request):
 def branchesView(request):
     branches = Branch.objects.all()
     return render(request, 'main/branches.html', {'branches': branches})
+
+@login_required
+def redirect_to_branch_admin(request, branch_name):
+    branch_name_safe = branch_name.replace(' ', '-')
+    
+    return redirect(f'/{branch_name_safe}-admin/')

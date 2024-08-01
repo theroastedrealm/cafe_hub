@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+from main.models import Branch
+
 
 from .models import Seat
 from .decorators import allowed_users
@@ -8,7 +10,7 @@ from .decorators import allowed_users
 def homepage(request, branch_id):
     items = Seat.objects.filter(branch=branch_id)
     try:
-        booked_seats = Seat.objects.filter(user=request.user)
+        booked_seats = Seat.objects.filter(user=request.user,branch=branch_id)
         unavailable_seats = Seat.objects.filter(available=False, branch=branch_id).exclude(user=request.user)
     except:
         booked_seats = None

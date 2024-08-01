@@ -159,7 +159,7 @@
           Logout
         </button>
       </form>
-      {% if is_staff %}
+      {% if is_staff or user.is_superuser %}
       <form method="POST" action="{% url 'staffpage' %}"> 
         {% csrf_token %}<button class="staffpage_link" type="Staff Page">Staff Page</button>
     </form>
