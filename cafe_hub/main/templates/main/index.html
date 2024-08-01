@@ -142,10 +142,6 @@ h1 {
             <i class="fas fa-exclamation"></i> 
             App 6 -  Specials of the DAY
         </a>
-        <a href="{% url 'dashboard' %}" class="app">
-            <i class="fas fa-tasks"></i> 
-            App 7 -  Inventory Checklist
-        </a>
 
         </a>
         {% elif user_role != 'customer' %}
@@ -153,7 +149,7 @@ h1 {
             <i class="fas fa-book"></i>
             App 1 - Pre-order food/drink 
         </a>
-        <a href="{% url 'homepage' branch.id%}" class="app">
+        <a href="{% url 'seating_homepage' user_branch.id %}" class="app">
             <i class="fas fa-chair"></i>
             App 2 - Seating Availability
         </a>
@@ -184,7 +180,7 @@ h1 {
         {% endif %}
     </div>
     {% else %}
-        <p>Please <a href="combined_auth.html">sign up or log in</a> to access the dashboard.</p>
+        <p>Please <a href="{% url 'login' %}">sign up or log in</a> to access the dashboard.</p>
     {% endif %}
 </body>
 </html>
