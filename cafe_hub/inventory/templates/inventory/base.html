@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inventory Checklist</title>
@@ -78,12 +79,162 @@
       .background {
         background-color: #fff8dc;
       }
-        
+      .left-side {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0; /* Remove left padding */
+        background-color: #f1e0b5;
+        margin-left: 20px; /* Adjust this value to move the entire column to the left */
+      }
+      .left-side img {
+        margin-bottom: 10px;
+        width: 50px;
+        margin-left: 0; /* Reset margin-left for individual images */
+      }
+
+      .header {
+        text-align: center;
+        padding: 20px;
+        background-color: #8b4513;
+        color: white;
+        border: 3px solid #3e2723;
+      }
+
+      .header h1 {
+        margin: 0;
+        color: #ffffff;
+      }
+
+      .top-right-button,
+      .homepage_link {
+        position: absolute;
+        top: 20px;
+        background-color: #3e2723;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+      .top-right-button {
+        right: 20px;
+      }
+      .top-right-button:hover {
+        background-color: #f1e0b5;
+        transform: scale(1.1);
+      }
+      {% comment %} .staffpage_link {
+        right: 160px;
+      }
+      .staffpage_link:hover {
+        background-color: #f1e0b5;
+        transform: scale(1.1);
+      } {% endcomment %}
+
+      .homepage_link {
+        right: 165px;
+      }
     </style>
   </head>
   <body>
-    {% include 'inventory/navigation.html' %} {% block content %} {% endblock
-    content %}
+    <div class="header">
+      <h1>Inventory Checklist</h1>
+    </div>
+    {% block login %}
+    <div>
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="top-right-button" type="submit">Logout</button>
+      </form>
+      {% if is_staff or user.is_superuser %}
+      <form method="POST" action="{% url 'staffpage' %}">
+        {% csrf_token %}
+        <button class="staffpage_link" type="submit">Staff Page</button>
+      </form>
+      {% endif %}
+      <form method="POST" action="{% url 'index' %}">
+        {% csrf_token %}
+        <button class="homepage_link" type="submit">Home Page</button>
+      </form>
+      {% else %}
+      <form method="get" action="{% url 'login' %}">
+        {% csrf_token %}
+        <button class="top-right-button" type="submit">Login</button>
+      </form>
+      {% endif %}
+    </div>
+    {% endblock %}
+
+    <div class="main-content d-flex">
+      <div class="left-side">
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+      </div>
+
+      <div class="container">{% block content %} {% endblock content %}</div>
+    </div>
 
     <!-- Bootstrap JS and dependencies -->
     <script
@@ -96,4 +247,3 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>
-{% endblock content %}
