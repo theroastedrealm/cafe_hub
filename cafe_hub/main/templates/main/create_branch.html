@@ -1,121 +1,115 @@
 <!DOCTYPE html>
 {% load static %}
 <html>
-<head>
+  <head>
     <title>Create Branch</title>
     <style>
-        body {
-          background-color: #f1e0b5;
-          margin: 0;
-          font-family: Roboto, sans-serif;
-          align-items: center;
-          display: flex;
-          height: 100vh;
-          align-items: center;
-        }
-        .main-content {
-          display: flex;
-          border-radius: 8px;
-          padding: 20px;
-          
-              
-        }
-          .left-side {
-          display: block;
-          
-          
-          padding: 20px;
-          background-color: #f1e0b5;
-          
-        }
-  
-        .left-side img {
-          display: block;
-          margin-bottom: 10px;
-          width: 50px;
-        } 
-        .form_container{
-          display:flex;
-          justify-content: center;
-          flex-direction: column;
-          
-          padding: 20px;
-        }
-      </style>
-</head>
-<body>
-    
+      body {
+        background-color: #f1e0b5;
+        margin: 0;
+        font-family: Roboto, sans-serif;
+        align-items: center;
+        display: flex;
+        height: 100vh;
+        align-items: center;
+      }
+      .main-content {
+        display: flex;
+        border-radius: 8px;
+        padding: 20px;
+      }
+      .left-side {
+        display: block;
+
+        padding: 20px;
+        background-color: #f1e0b5;
+      }
+
+      .left-side img {
+        display: block;
+        margin-bottom: 10px;
+        width: 50px;
+      }
+      .form_container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
     <div class="main-content">
-        <div class="left-side">
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-          <img
-            src="{% static 'main/images/coffee-bean.png' %}"
-            alt="Left Image"
-          />
-        </div>
-        <div class="form-container">
+      <div class="left-side">
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+        <img
+          src="{% static 'main/images/coffee-bean.png' %}"
+          alt="Left Image"
+        />
+      </div>
+      <div class="form-container">
         <h1>Create a New Branch</h1>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Create Branch</button>
-            </form>
-        </div>
+        <form method="post">
+          {% csrf_token %} {{ form.as_p }}
+          <button type="submit">Create Branch</button>
+        </form>
+      </div>
     </div>
-</body>
+  </body>
 </html>
