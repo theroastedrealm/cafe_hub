@@ -64,17 +64,20 @@ h1 {
 }
 
 .app-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 40px; 
+    max-width: 700px;
+    margin: 0 auto;
     justify-content: center;
-    padding: 20px; 
 }
 
 .app {
     background-color: white;
     border: 1px solid #ddd;
-    margin: 10px;
-    padding: 20px;
+    margin: 10px 0;
+    padding: 30px;
     width: 300px;
     text-align: center;
     border-radius: 10px;
@@ -97,14 +100,46 @@ h1 {
     font-size: 24px;
     margin-bottom: 10px;
 }
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
 
+}
+.left-side {
+    display: block;  
+    padding: 20px;
+    background-color: #f1e0b5;
+          
+}
+  
+.left-side img {
+    display: block;
+    margin-bottom: 10px;
+    width: 80px;
+    height: auto;
+}   
+.right-side {
+    display: flex;
+    flex-direction: column;
+    background-color: #f1e0b5;
+    justify-content: center;
+    align-self: flex-end;
+}
 
+.right-side img {
+    display: block;
+    margin-bottom: 10px;
+    width: 200px;
+    height: auto;
+}
     </style>
 </head>
 <body>
     {% if user.is_authenticated %}
     <div class="header">
-        <h1>Welcome to {{ branch.name }}'s App Center, {{ user.username }}</h1>
+        <h1>Welcome to {{ user.branch.name }}'s App Center, {{ user.username }}</h1>
         <div class="button-container">
             <form method="POST" action="{% url 'logout' %}" class="form-logout">
                 {% csrf_token %}
@@ -115,72 +150,92 @@ h1 {
             <a href="{% url 'redirect_to_admin' %}" class="btn btn-primary">Go to Admin Interface</a>
             {% endif %}        
         </div>
-    </div>    
-    <div class="app-grid">
-        {% if user_role == 'customer' %}
-        <a href="{% url 'Menu' %}" class="app">
-            <i class="fas fa-book"></i>
-            App 1 - Pre-order food/drink 
-        </a>
-        <a href="{% url 'homepage' branch.id%}" class="app">
-            <i class="fas fa-chair"></i>
-            App 2 - Seating Availability
-        </a>
-        <a href="#" class="app">
-            <i class="fas fa-coffee"></i>
-            App 3 -  Preferred Items by Customers
-        </a>
-        <a href="{% url 'dashboard' %}" class="app">
-            <i class="fas fa-music"></i>
-            App 4 -  Playlist Upload
-        </a>
-        <a href="#" class="app">
-            <i class="fas fa-shopping-cart"></i> 
-            App 5 -  Purchase your favorite's Cafe's Coffee... and other items    
-        </a>
-        <a href="#" class="app">
-            <i class="fas fa-exclamation"></i> 
-            App 6 -  Specials of the DAY
-        </a>
+    </div> 
+    <div class="container">
+        <div class="left-side">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+        </div>  
 
-        </a>
-        {% elif user_role != 'customer' %}
-        <a href="{% url 'Menu' %}" class="app">
-            <i class="fas fa-book"></i>
-            App 1 - Pre-order food/drink 
-        </a>
-        <a href="{% url 'seating_homepage' user_branch.id %}" class="app">
-            <i class="fas fa-chair"></i>
-            App 2 - Seating Availability
-        </a>
-        <a href="#" class="app">
-            <i class="fas fa-coffee"></i>
-            App 3 -  Preferred Items by Customers
-        </a>
-        <a href="{% url 'dashboard' %}" class="app">
-            <i class="fas fa-music"></i>
-            App 4 -  Playlist Upload
-        </a>
-        <a href="#" class="app">
-            <i class="fas fa-shopping-cart"></i> 
-            App 5 -  Purchase your favorite's Cafe's Coffee... and other items    
-        </a>
-        <a href="#" class="app">
-            <i class="fas fa-exclamation"></i> 
-            App 6 -  Specials of the DAY
-        </a>
-        <a href="{% url 'dashboard' %}" class="app">
-            <i class="fas fa-tasks"></i> 
-            App 7 -  Inventory Checklist
-        </a>
-        <a href="#" class="app">
-            <i class="fas fa-boxes"></i> 
-            App 8 -  Cafe Entry Point for employers / employees of cafes 
-        </a>
-        {% endif %}
-    </div>
+        
+
+        <div class="app-grid">
+            {% if user_role == 'customer' %}
+            <a href="{% url 'Menu' %}" class="app">
+                <i class="fas fa-book"></i>
+                App 1 - Pre-order food/drink 
+            </a>
+            <a href="{% url 'homepage' branch.id%}" class="app">
+                <i class="fas fa-chair"></i>
+                App 2 - Seating Availability
+            </a>
+            <a href="#" class="app">
+                <i class="fas fa-coffee"></i>
+                App 3 -  Preferred Items by Customers
+            </a>
+            <a href="{% url 'dashboard' %}" class="app">
+                <i class="fas fa-music"></i>
+                App 4 -  Playlist Upload
+            </a>
+            <a href="#" class="app">
+                <i class="fas fa-shopping-cart"></i> 
+                App 5 -  Purchase your favorite's Cafe's Coffee... and other items    
+            </a>
+            <a href="#" class="app">
+                <i class="fas fa-exclamation"></i> 
+                App 6 -  Specials of the DAY
+            </a>
+
+            </a>
+            {% elif user_role != 'customer' %}
+            <a href="{% url 'Menu' %}" class="app">
+                <i class="fas fa-book"></i>
+                App 1 - Pre-order food/drink 
+            </a>
+            <a href="{% url 'seating_homepage' user_branch.id %}" class="app">
+                <i class="fas fa-chair"></i>
+                App 2 - Seating Availability
+            </a>
+            <a href="#" class="app">
+                <i class="fas fa-coffee"></i>
+                App 3 -  Preferred Items by Customers
+            </a>
+            <a href="{% url 'dashboard' %}" class="app">
+                <i class="fas fa-music"></i>
+                App 4 -  Playlist Upload
+            </a>
+            <a href="#" class="app">
+                <i class="fas fa-shopping-cart"></i> 
+                App 5 -  Purchase your favorite's Cafe's Coffee... and other items    
+            </a>
+            <a href="#" class="app">
+                <i class="fas fa-exclamation"></i> 
+                App 6 -  Specials of the DAY
+            </a>
+            <a href="{% url 'dashboard' %}" class="app">
+                <i class="fas fa-tasks"></i> 
+                App 7 -  Inventory Checklist
+            </a>
+            <a href="#" class="app">
+                <i class="fas fa-boxes"></i> 
+                App 8 -  Cafe Entry Point for employers / employees of cafes 
+            </a>
+            {% endif %}
+        </div>
+        <div class="right-side">
+            <img src="{% static 'main/images/pile-of-beans.png' %}" alt="Right Image"/>
+        </div> 
+    </div>    
     {% else %}
         <p>Please <a href="{% url 'login' %}">sign up or log in</a> to access the dashboard.</p>
     {% endif %}
+    
 </body>
 </html>
