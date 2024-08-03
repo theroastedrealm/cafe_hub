@@ -14,6 +14,10 @@ from django.contrib.auth.models import Group
 
 @unauthenticated_user
 def login_view(request):
+    login_form = AuthenticationForm()
+    results = []
+    name_query = address_query = city_query = zip_code_query = ""
+    limit = 3
     if request.method == 'POST':
         login_form = AuthenticationForm(request, data=request.POST)
         if login_form.is_valid():
@@ -22,9 +26,32 @@ def login_view(request):
             
         else:
             print(login_form.errors)
-    else:
-        login_form = AuthenticationForm()
-    return render(request, 'main/login.html', {'login_form': login_form})
+    elif request.method == 'GET':
+        search_by = request.GET.get('search_by')
+        query = request.GET.get(search_by, '')
+        
+        if search_by == 'name':
+            results = Branch.objects.filter(name__icontains=query)[:limit]
+            name_query = query
+        elif search_by == 'address':
+            results = Branch.objects.filter(address__icontains=query)[:limit]
+            address_query = query
+        elif search_by == 'city':
+            results = Branch.objects.filter(city__icontains=query)[:limit]
+            city_query = query
+        elif search_by == 'zip_code':
+            results = Branch.objects.filter(zip_code__icontains=query)[:limit]
+            zip_code_query = query
+    
+    context = {
+        'login_form': login_form,
+        'results': results,
+        'name_query': name_query,
+        'address_query': address_query,
+        'city_query': city_query,
+        'zip_code_query': zip_code_query,
+    }
+    return render(request, 'main/login.html', context)
     
 @unauthenticated_user
 def signup_view(request):
