@@ -19,6 +19,7 @@ urlpatterns = [
     path('branch/<int:branch_id>/', branch_detail, name='branch_detail'),
     path('redirect-to-admin/', views.redirect_to_admin, name='redirect_to_admin'),
     path('redirect-admin/<str:branch_name>/', views.redirect_to_branch_admin, name='redirect_admin'),
+    path('branches/', views.branchesView, name='branches'),
 ]
 
 
