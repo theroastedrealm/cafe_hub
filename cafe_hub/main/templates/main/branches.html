@@ -12,41 +12,80 @@ body {
 }
 .container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
-    flex: 1;
-}
-.branch_containers{
+    flex-direction:column;
+    align-items: center;
     
-    border-radius: 3px;
-    padding: 10px;
-    width: calc(15% - 70px);
-    border: 1px solid #ccc;
+    padding: 20px;
+    
 }
-.search_container{
-    padding: 10px 20px;
-    border-top: 1px solid #ccc;
+.branch_containers {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 40px;
+    max-width: 1700px;
+    width: 100%;
+    padding: 40px; 
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.branch {
+    background-color: #d3b38b;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.branch:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.left-side {
+    display: flex;  
+    padding: 20px;
+    background-color: #f1e0b5;
+          
+}
+  
+.left-side img {
+    display: flex;
+    margin-bottom: 10px;
+    width: 80px;
 }
 
 </style>
-    <div>
+    <div class="container">
+        <div class="left-side">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+        </div>  
+
         <h1>Coffee Shops</h1>
-        <div classname="container"> 
-                       
+        
+        <div class="branch_containers">            
             {% for branch in branches %}
-            <div class="branch_containers">
             
-                <li><a href="{% url 'branch_detail' branch.id %}">{{ branch.name }}</a></li>
-                <li>{{ branch.address }}</li>
-                <li>{{ branch.city }}</li>
-                <li>{{ branch.zip_code }}</li>
-            
+            <div class="branch">
+                <h3>{{ branch.name }}</h3>
+                <p><stron   g>Address:</strong> {{ branch.address }}</p>
+                <p><strong>City:</strong> {{ branch.city }}</p>
+                <p><strong>Zip Code:</strong> {{ branch.zip_code }}</p>
             </div>
+              
             {% endfor %}
         </div>
-    <div class="search_container">
-        <p>Can't see your Coffee Shop? <a href={%url 'search'%}>Press here to search</a></p>
     </div>
-    </div>
+    
+    
 {% endblock%}

@@ -39,7 +39,7 @@
 
     <ul>
         {% for branch in results %}
-        <li><a href="{% url 'branch_detail' branch.id %}">{{ branch.name }}</a></li>
+        <li><a href="{% url 'set_current_branch' branch.id %}">{{ branch.name }}</a></li>
         {% empty %}
             <li>No coffee shops found.</li>
         {% endfor %} 

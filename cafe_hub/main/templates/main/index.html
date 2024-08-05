@@ -93,7 +93,8 @@ h1 {
 .app:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    background-color: #f8f9fa; 
+    background-color: #e3a47b; 
+
 }
 
 .app i {
@@ -172,7 +173,7 @@ h1 {
                 <i class="fas fa-book"></i>
                 App 1 - Pre-order food/drink 
             </a>
-            <a href="{% url 'homepage' branch.id%}" class="app">
+            <a href="{% url 'seating_homepage' %}" class="app">
                 <i class="fas fa-chair"></i>
                 App 2 - Seating Availability
             </a>
@@ -180,7 +181,7 @@ h1 {
                 <i class="fas fa-coffee"></i>
                 App 3 -  Preferred Items by Customers
             </a>
-            <a href="{% url 'dashboard' %}" class="app">
+            <a href="#" class="app">
                 <i class="fas fa-music"></i>
                 App 4 -  Playlist Upload
             </a>
@@ -199,7 +200,7 @@ h1 {
                 <i class="fas fa-book"></i>
                 App 1 - Pre-order food/drink 
             </a>
-            <a href="{% url 'seating_homepage' user_branch.id %}" class="app">
+            <a href="{% url 'seating_homepage' %}" class="app">
                 <i class="fas fa-chair"></i>
                 App 2 - Seating Availability
             </a>

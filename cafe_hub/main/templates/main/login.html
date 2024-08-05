@@ -12,6 +12,7 @@
         display: flex;   
         justify-content: center; 
         align-items: center; 
+        
     }
     .content{
         display: flex; 
@@ -25,6 +26,38 @@
     .content-container{
         flex: 1;
     }
+    .login-btn{
+        background-color: #8b4513;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        
+        font-size: 14px;
+        
+        border: 1px solid black; 
+    }
+    .btn{
+        background-color: #8b4513;
+        color: white;
+        border: none;
+        padding: 10px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        margin:5px;
+        font-size: 14px;
+        
+        border: 1px solid black; 
+    }
 </style>
 
 <div class="content">
@@ -34,7 +67,7 @@
             <h2>Log In</h2>
             {{ login_form.as_p }}
             <input type="hidden" name="next" value="{% url 'search' %}" />
-            <button type="submit">Log In</button>
+            <button class="login-btn" type="submit">Log In</button>
             <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
         </form>
     </div>
@@ -44,19 +77,19 @@
             {% csrf_token %}
             <div>
                 <input type="text" name="name" placeholder="Search by name" value="{{ name_query }}">
-                <button type="submit" name="search_by" value="name">Search by Name</button>
+                <button class="btn" type="submit" name="search_by" value="name">Search by Name</button>
             </div>
             <div>
                 <input type="text" name="address" placeholder="Search by address" value="{{ address_query }}">
-                <button type="submit" name="search_by" value="address">Search by Address</button>
+                <button class="btn" type="submit" name="search_by" value="address">Search by Address</button>
             </div>
             <div>
                 <input type="text" name="city" placeholder="Search by city" value="{{ city_query }}">
-                <button type="submit" name="search_by" value="city">Search by City</button>
+                <button class="btn" type="submit" name="search_by" value="city">Search by City</button>
             </div>
             <div>
                 <input type="text" name="zip_code" placeholder="Search by zip code" value="{{ zip_code_query }}">
-                <button type="submit" name="search_by" value="zip_code">Search by Zip Code</button>
+                <button class="btn" type="submit" name="search_by" value="zip_code">Search by Zip Code</button>
             </div>
         </form>
         <h2>Results for "{% if name_query %}{{ name_query }}{% endif %}
