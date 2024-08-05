@@ -23,7 +23,11 @@ def login_view(request):
         if login_form.is_valid():
             user = login_form.get_user()
             login(request, user)
-            
+            if get_user_role(user)== 'customer':
+                next_url = request.GET.get('next', 'search')
+            else:
+                next_url = '/'
+            return redirect(next_url)
         else:
             print(login_form.errors)
     elif request.method == 'GET':
@@ -186,3 +190,10 @@ def redirect_to_branch_admin(request, branch_name):
     branch_name_safe = branch_name.replace(' ', '-')
     
     return redirect(f'/{branch_name_safe}-admin/')
+
+def set_current_branch(request, branch_id):
+    
+        branch = Branch.objects.get(id=branch_id)
+        request.user.branch = branch
+        request.user.save()
+        return redirect('housingpage')

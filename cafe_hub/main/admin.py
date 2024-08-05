@@ -4,9 +4,25 @@ from django.contrib import admin
 from .models import Branch, CustomUser
 from django.contrib.auth.models import Group
 from django.contrib.admin import AdminSite
-@admin.register(Branch)
+
+
 class BranchAdmin(admin.ModelAdmin):
     list_display = ['name', 'address','city', 'zip_code']
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        
+        return qs.filter(id=request.user.branch.id)
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if not request.user.is_superuser:
+            form.base_fields['branch'].queryset = Branch.objects.filter(id=request.user.branch.id)
+        return form
+
+admin.site.register(Branch, BranchAdmin)
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):

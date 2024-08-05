@@ -20,6 +20,7 @@ urlpatterns = [
     path('redirect-to-admin/', views.redirect_to_admin, name='redirect_to_admin'),
     path('redirect-admin/<str:branch_name>/', views.redirect_to_branch_admin, name='redirect_admin'),
     path('branches/', views.branchesView, name='branches'),
+    path('set_current_branch/<int:branch_id>/', views.set_current_branch, name='set_current_branch'),
 ]
 
 
