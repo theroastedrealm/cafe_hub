@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'preOrderApp',
     'seating_main',
     "inventory",
+    'Playlist',
     'crispy_forms',
     'crispy_bootstrap4',
 ]
