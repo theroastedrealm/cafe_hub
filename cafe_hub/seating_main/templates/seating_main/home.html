@@ -243,13 +243,7 @@
             {% for seat in seats %} {% if seat.available %}
             <li>
               {{ seat.name }} Available!
-              <form
-                action="{% url 'update_seat_availability' seat.id %}"
-                method="POST"
-              >
-                {% csrf_token %}
-                <button type="submit">Book Seat</button>
-              </form>
+              
             </li>
             {% endif %} {% endfor %}
           </ul>
@@ -267,29 +261,6 @@
           </ul>
         </div>
 
-        <div class="column my-bookings">
-          <h2 class="section-title">My Seats</h2>
-          {% if user.is_authenticated %}
-          <ul>
-            {% for seat in booked_seats %}
-            <li>
-              {{ seat.name }}
-              <form
-                action="{% url 'update_seat_availability' seat.id %}"
-                method="POST"
-              >
-                {% csrf_token %}
-                <button type="submit">Remove Booking</button>
-              </form>
-            </li>
-            {% empty %}
-            <li>No seats booked yet.</li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p class="not-logged-in">Not logged in</p>
-          {% endif %}
-        </div>
         {% endblock %}
       </div>
 
