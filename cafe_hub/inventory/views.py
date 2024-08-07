@@ -41,7 +41,7 @@ class AddItem(CreateView):
         return context
     
     def form_valid(self, form):
-        form.instance.User = self.request.user
+        form.instance.user = self.request.user
         if not self.request.user.is_superuser:
             form.instance.branch = self.request.user.branch 
         return super().form_valid(form)

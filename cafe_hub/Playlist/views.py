@@ -159,8 +159,9 @@ def logout_view(request):
 # views.py
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
-import spotify
-from spotify.oauth2 import SpotifyOAuth
+import spotipy
+from spotipy import Spotify
+from spotipy.oauth2 import SpotifyOAuth
 import json
 import os
 from datetime import datetime, timedelta
@@ -205,7 +206,7 @@ def spotify_playlists(request):
     if not token_info or is_token_expired(token_info):
         return redirect('spotify')
     
-    sp = spotify.Spotify(auth=token_info['access_token'])
+    sp = spotipy.Spotify(auth=token_info['access_token'])
     playlists_data = sp.current_user_playlists()
     
     playlists = []
