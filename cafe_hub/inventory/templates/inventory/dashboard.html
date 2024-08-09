@@ -32,7 +32,7 @@
             <th scope="col">Qty</th>
             {% comment %} <th scope="col">Status</th>
             <th scope="col">Incoming Order</th> {% endcomment %}
-            <th scope="col"></th>
+            <th scope="col">Indicator</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -57,10 +57,12 @@
             {% else %}
             <td class="text-success">{{ item.quantity }}</td>
             {% endif %}
-            <td>{{ item.status }}</td>
-            <td>{{ item.incoming_order }}</td>
-            <td><a href = "{% url 'edit-item' item.id %}" class = "btn btn-outline-secondary">Edit</a>
+            {% comment %} <td>{{ item.status }}</td>
+            <td>{{ item.incoming_order }}</td> {% endcomment %}
+            <td>
+              <div class="indicator" style="background-color: {% if item.quantity == 0 %}red{% elif item.quantity <= LOW_INVENTORY_THRESHOLD %}yellow{% else %}green{% endif %};"></div>
             </td>
+            <td><a href = "{% url 'edit-item' item.id %}" class = "btn btn-outline-secondary">Edit</a></td>
             <td><a href = "{% url 'delete-item' item.id %}" class = "btn btn-secondary">Delete</a></td>
           </tr>
           {% endfor %}

@@ -106,3 +106,11 @@ footer {
 form {
     text-align: center; /* Center align the logout button */
 }
+
+
+.indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+  }

@@ -14,12 +14,18 @@ class BranchAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         
-        return qs.filter(id=request.user.branch.id)
+        if request.user.branch:
+            return qs.filter(id=request.user.branch.id)
+        else:
+            return qs.none()
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
         if not request.user.is_superuser:
-            form.base_fields['branch'].queryset = Branch.objects.filter(id=request.user.branch.id)
+            if request.user.branch:
+                form.base_fields['branch'].queryset = Branch.objects.filter(id=request.user.branch.id)
+            else:
+                form.base_fields['branch'].queryset = Branch.objects.none()
         return form
 
 admin.site.register(Branch, BranchAdmin)
@@ -46,6 +52,9 @@ class BranchAdminSite(AdminSite):
     site_header = "Coffee Shop Admin"
     site_title = "Manager Portal"
     index_title = "Welcome to the Admin Portal"
+    
+branch_admin_site = BranchAdminSite(name='branch_admin')
+branch_admin_site.register(Branch, BranchAdmin)
 
 
 
