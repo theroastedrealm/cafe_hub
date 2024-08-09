@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path,include
-from preOrderApp.views import Menu
+
 from inventory.views import Dashboard
 from main import views
 from main.admin_sites import branch_admin_sites,populate_branch_admin_sites

@@ -2,6 +2,9 @@
 
 
 {% block content %}
-
+<h1>Order Confirmation</h1>
+    <p>Thank you for your order! Your order number is {{ order.order_number }}.</p>
+    <p>Status: {{ order.status }}</p>
+    <a href="{% url 'menu_page' %}">Back to Menu</a>
 
 {% endblock content %}

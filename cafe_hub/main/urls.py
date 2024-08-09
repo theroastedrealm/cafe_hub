@@ -5,7 +5,7 @@ from inventory.views import Dashboard
 from . import views
 from django.contrib.auth import views as auth_views
 from .views import branch_detail, create_branch
-from preOrderApp.views import Menu
+
 
 
 urlpatterns = [

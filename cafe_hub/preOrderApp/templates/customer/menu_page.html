@@ -1,0 +1,176 @@
+{% extends 'customer/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+ body {
+    background-color: #f1e0b5;
+    margin: 0;
+    font-family: Roboto, sans-serif;
+  }
+
+  .content {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+  }
+
+  .menu-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f1e0b5;
+    margin-left: 20px;
+    
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f1e0b5;
+    
+  }
+
+  .left-side img {
+    display: block;
+    margin-bottom: 10px;
+    width: 50px;
+  }
+  .categories-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .category {
+    background-color: #fff8dc;
+    border: 1px solid #3e2723;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    max-width: 1200px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+   
+  }
+
+  .category h2 {
+    margin-top: 0;
+    background-color: #8b4513;
+   font-size: 25px; 
+   color: white;
+   width: 100%;
+    
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .category div {
+    padding: 5px;
+  }
+  .navigation-bar {
+    background-color: #8b4513;
+    color: white; 
+    border: 3px solid #3e2723;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+  }
+  .navigation-bar h1{
+    position: absolute;
+  }
+  .homepage_link {
+    margin-left:1000px;
+    background-color: #3e2723;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+  }
+  button {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    margin: 5px;
+    font-size: 12px;
+    border: 1px solid black; 
+  }
+</style>
+      
+</style>
+<div class="navigation-bar">
+  <h1>Menu Page</h1>
+
+  <div>
+          <form method="POST" action="{% url 'index' %}"> 
+          {% csrf_token %}<button class="homepage_link" type="submit">Home Page</button>
+        </form>
+  </div>
+</div>
+
+
+<div class="content">
+  <div class="left-side">
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+  </div>
+
+  <div class="menu-content">
+    <h1>Menu Page</h1>
+    <form method="post">
+      {% csrf_token %}
+      <div class="categories-container">
+        {% for category in categories %}
+          <div class="category">
+            <h2>{{ category.name }}</h2>
+            {% for item in category.items.all %}
+              <div>
+                <input type="checkbox" name="items" value="{{ item.id }}">
+                {{ item.name }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+      <button type="submit">Submit Order</button>
+    </form>
+
+    <h2>Your Orders</h2>
+    <ul>
+        {% for order in user_orders %}
+            <li>
+                Order {{ order.order_number }}:
+                {% for item in order.items.all %}
+                    {{ item.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                - Status: {{ order.status }}
+            </li>
+        {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock content %}

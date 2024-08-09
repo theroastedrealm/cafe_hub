@@ -80,7 +80,8 @@ def signup_view(request):
             user.save()
 
             login(request, user)
-            if get_user_role== 'customer':
+            user_role = role
+            if user_role== 'customer':
                 next_url = request.GET.get('next', 'search')
             else:
                 next_url = request.GET.get('next', 'create_branch')
