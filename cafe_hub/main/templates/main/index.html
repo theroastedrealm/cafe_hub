@@ -50,7 +50,9 @@ h1 {
 
 .form-logout button {
     background-color: #3e2723;
-    margin-right: 10px;  
+    margin-right: 10px; 
+    font-size: 16px;
+    padding: 15px 30px; 
 }
 
 .form-logout button:hover, .btn:hover {
@@ -61,6 +63,9 @@ h1 {
 .btn {
     background-color: #3e2723;
     margin-left: 10px;  
+    font-size: 16px;    
+    padding: 15px 30px;
+    
 }
 
 .app-grid {
@@ -135,6 +140,9 @@ h1 {
     width: 200px;
     height: auto;
 }
+.searchbtn{
+    margin-right:20px;
+}
     </style>
 </head>
 <body>
@@ -142,10 +150,14 @@ h1 {
     <div class="header">
         <h1>Welcome to {{ user.branch.name }}'s App Center, {{ user.username }}</h1>
         <div class="button-container">
+            {% if user_role == 'customer' %}
+            <a href="{% url 'search' %}" class="btn searchbtn">Search</a>
+            {% endif %}
             <form method="POST" action="{% url 'logout' %}" class="form-logout">
                 {% csrf_token %}
                 <button type="submit">Log Out</button>
             </form>
+            
             {% if user.is_superuser or user_role == 'admin' %}
             <a href="{% url 'create_branch' %}" class="btn">Create a New Branch</a>
             <a href="{% url 'redirect_to_admin' %}" class="btn btn-primary">Go to Admin Interface</a>
@@ -169,7 +181,7 @@ h1 {
 
         <div class="app-grid">
             {% if user_role == 'customer' %}
-            <a href="{% url 'Menu' %}" class="app">
+            <a href="{% url 'menu_page' %}" class="app">
                 <i class="fas fa-book"></i>
                 App 1 - Pre-order food/drink 
             </a>
@@ -196,7 +208,7 @@ h1 {
 
             </a>
             {% elif user_role != 'customer' %}
-            <a href="{% url 'Menu' %}" class="app">
+            <a href="{% url 'admin_page' %}" class="app">
                 <i class="fas fa-book"></i>
                 App 1 - Pre-order food/drink 
             </a>
