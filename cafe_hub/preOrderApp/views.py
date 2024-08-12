@@ -29,6 +29,10 @@ def admin_page(request):
             order = Order.objects.get(id=order_id)
             order.status = 'completed'
             order.save()
+        elif 'delete_order' in request.POST:
+            order_id = request.POST.get('order_id')
+            order = Order.objects.get(id=order_id)
+            order.delete()
     
     categories = Category.objects.filter(branch=branch)
     orders = Order.objects.filter(branch=branch)

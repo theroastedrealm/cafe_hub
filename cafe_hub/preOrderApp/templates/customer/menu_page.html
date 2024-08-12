@@ -108,6 +108,9 @@
     font-size: 12px;
     border: 1px solid black; 
   }
+  .orders_content{
+    margin-top: 100px;
+  }
 </style>
       
 </style>
@@ -159,18 +162,20 @@
       <button type="submit">Submit Order</button>
     </form>
 
-    <h2>Your Orders</h2>
-    <ul>
-        {% for order in user_orders %}
-            <li>
-                Order {{ order.order_number }}:
-                {% for item in order.items.all %}
-                    {{ item.name }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-                - Status: {{ order.status }}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="orders_content">
+      <h2>Your Orders</h2>
+      <ul>
+          {% for order in user_orders %}
+              <li>
+                  Order {{ order.order_number }}:
+                  {% for item in order.items.all %}
+                      {{ item.name }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                  - Status: {{ order.status }}
+              </li>
+          {% endfor %}
+      </ul>
+    </div>
   </div>
 </div>
 {% endblock content %}
