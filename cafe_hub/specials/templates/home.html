@@ -1,0 +1,162 @@
+ {% extends "base.html" %}
+{% block content %}
+<head>
+  <style>
+    .specials {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 600px;
+        margin: 20px auto;
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+
+    .specials h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .specials p {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    .specials ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .specials li {
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .special {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      padding: 10px;
+      text-align: left;
+  }
+
+  .special ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  .special li {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 5px;
+  }
+
+  .delete_button {
+    display: flex;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .create_section {
+    padding: 20px;
+    margin: 20px auto;
+}
+
+.create_section h1 {
+    color: #4a5568;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.create_section form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.create_section label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.create_section input {
+    width: calc(100% - 40px);
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #cbd5e0;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.create_section button {
+    background-color: #48bb78;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create_section button:hover {
+    background-color: #38a169;
+}
+</style>
+</head>
+
+<div class="specials">
+    <h1>Specials</h1>
+    <p>Today's specials are:</p>
+    <div class="special">
+    <ul>
+        {% for special in specials %}
+        {% if special.image %}
+        <img class="special_image" src="{{ special.image.url }}" style="max-width: 200px; max-height: 200px;" />
+        
+        {% endif %}
+        <li>{{ special.name }}</li>
+        <li>{{ special.description }}</li>
+        <li>${{ special.price }}</li>
+        {% if is_staff %}
+        <form class="delete_button" action="{% url 'delete_special' special.id%}">
+          {% csrf_token %}
+          <button type="submit" >Delete Special</button>
+        </form>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    </div>
+</div>
+
+{% if is_staff %}
+    <div class="create_section">
+      <h1>Create new Special:</h1>
+      <form action="{% url 'create_special' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required step="any">
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image">
+        <button type="submit">Create Special</button>
+      </form>
+    </div>
+    {% endif %}
+
+{% endblock %}
+

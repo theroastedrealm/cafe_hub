@@ -44,6 +44,7 @@ urlpatterns = [
     path('inventory/', include('inventory.urls')),
     path('playlist/', include('Playlist.urls')),
     path('products_services/', include('productService.urls')),
+    path('specials/',include('specials.urls')),
     #path('branch/<int:pk>/', views.branch_detail, name='branch_detail'),
     #path('branch/<int:pk>/menu/', Menu.as_view(), name='menu'),
     #path('branch/<int:pk>/inventory/',Dashboard.as_view() , name='inventory'),
