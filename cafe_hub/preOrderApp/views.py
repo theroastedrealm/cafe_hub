@@ -14,6 +14,10 @@ def admin_page(request):
         if 'add_category' in request.POST:
             category_name = request.POST.get('category_name')
             Category.objects.create(name=category_name,branch=branch)
+        elif 'delete_category' in request.POST:
+            category_id = request.POST.get('category_id')
+            category = Category.objects.get(id=category_id,branch=branch)
+            category.delete()
         elif 'add_item' in request.POST:
             item_name = request.POST.get('item_name')
             category_id = request.POST.get('category_id')

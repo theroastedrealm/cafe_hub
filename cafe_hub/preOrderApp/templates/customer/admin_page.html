@@ -162,6 +162,19 @@
                     <button type="submit" name="add_category">Add Category</button>
                 </form>
             </div>
+        
+            <div class="section">
+                <h2 class="section-title">Delete Category</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <select name="category_id" required>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" name="delete_category">Delete Category</button>
+                </form>
+            </div>
             
             <div class="section">
                 <h2 class="section-title">Add Item</h2>
