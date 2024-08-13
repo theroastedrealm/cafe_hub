@@ -1,28 +1,21 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Product/Service List</title>
-  </head>
-  <body>
-    <h1>Product/Service List</h1>
-    <a href="{% url 'product_service_add' %}">Add New Product/Service</a>
-    <ul>
-      {% for item in items %}
-      <li>
-        <h2>{{ item.name }}</h2>
-        <p>{{ item.description }}</p>
-        <img src="{{ item.image.url }}" alt="{{ item.name }}" />
-        {% if item.video %}
-        <video controls>
-          <source src="{{ item.video.url }}" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        {% endif %}
-        <a href="{{ item.link }}" target="_blank">Order on Amazon</a>
-        <a href="{% url 'product_service_edit' item.pk %}">Edit</a>
-        <a href="{% url 'product_service_delete' item.pk %}">Delete</a>
-      </li>
-      {% endfor %}
-    </ul>
-  </body>
-</html>
+{% extends 'product_service_base.html' %} {% block content %}
+<a href="{% url 'product_service_add' %}">Add New Product/Service</a>
+<ul>
+  {% for item in items %}
+  <li>
+    <h2>{{ item.name }}</h2>
+    <p>{{ item.description }}</p>
+    <img src="{{ item.image.url }}" alt="{{ item.name }}" />
+    {% if item.video %}
+    <video controls>
+      <source src="{{ item.video.url }}" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    {% endif %}
+    <a href="{{ item.link }}" target="_blank">Order on Amazon</a>
+    <a href="{% url 'product_service_edit' item.pk %}">Edit</a>
+    <a href="{% url 'product_service_delete' item.pk %}">Delete</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock content %}

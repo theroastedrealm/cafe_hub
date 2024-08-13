@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_beat',
     'main',
     'preOrderApp',
     'seating_main',
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'specials',
     'crispy_forms',
     'crispy_bootstrap4',
+    
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
