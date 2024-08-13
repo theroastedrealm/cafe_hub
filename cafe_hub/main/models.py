@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
     ROLE_CHOICES = [
         ('admin', 'Admin'),
         ('customer', 'Customer'),
-        ('uber-user', 'Uber-User')
+        
     ]
 
     
