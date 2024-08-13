@@ -17,10 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path,include
-
+from django.conf import settings
+from django.conf.urls.static import static
 from inventory.views import Dashboard
 from main import views
 from main.admin_sites import branch_admin_sites,populate_branch_admin_sites
+
 def generate_branch_admin_urls():
     if not branch_admin_sites:
         populate_branch_admin_sites()
@@ -40,11 +42,14 @@ urlpatterns = [
     path('menu/',include('preOrderApp.urls')),
     path('seating/',include('seating_main.urls')),
     path('inventory/', include('inventory.urls')),
-    path('playlist/', include('Playlist.urls'))
+    path('playlist/', include('Playlist.urls')),
+    path('products_services/', include('productService.urls')),
     #path('branch/<int:pk>/', views.branch_detail, name='branch_detail'),
     #path('branch/<int:pk>/menu/', Menu.as_view(), name='menu'),
     #path('branch/<int:pk>/inventory/',Dashboard.as_view() , name='inventory'),
-] 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += generate_branch_admin_urls()
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
