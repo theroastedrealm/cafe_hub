@@ -69,8 +69,6 @@ def signup_view(request):
             role = signup_form.cleaned_data['role']
             if role == 'customer':
                 group = Group.objects.get(name='customer')
-            elif role == 'uber-user':
-                group = Group.objects.get(name='uber-user')
             elif role == 'admin':
                 group = Group.objects.get(name='admin')
             else:
