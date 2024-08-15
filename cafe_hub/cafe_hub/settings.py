@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'Playlist',
     'productService',
     'specials',
+    'choiceProducts',
     'crispy_forms',
     'crispy_bootstrap4',
     

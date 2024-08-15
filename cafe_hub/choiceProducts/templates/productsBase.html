@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Coffee Shop{% endblock %}</title>
+   
+    <style>
+        .top-right-button, .homepage_link {
+            position: absolute;
+            top: 15px;
+            background-color: #3e2723;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 17px;
+        }
+        .top-right-button {
+            right: 20px;
+        }
+        .top-right-button:hover, .homepage_link:hover {
+            background-color: #f1e0b5;
+            transform: scale(1.1);
+        }
+        
+        .homepage_link {
+            right: 150px;
+        }
+        .header {
+          display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #8b4513;
+            color: white;
+            border: 3px solid #3e2723;
+            font-size: 20px;
+            height: 60px;
+            position: relative;
+      }
+      .header h3 {
+            margin: 0;
+            font-size: 25px;
+            text-align: center;
+            padding-left: 85px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+    {% block login %}
+    {% if user.is_staff or user.is_superuser %}
+    <div class="header"> 
+      <h3>Admin Page</h3>
+    </div>
+    {% else %}
+    <div class="header"> 
+      <h3>Our Choice Products</h3>
+      </div>
+    {%endif%}
+    <div>
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="top-right-button" type="submit">Logout</button>
+      </form>
+      
+      <form method="POST" action="{% url 'index' %}">
+        {% csrf_token %}<button class="homepage_link" type="submit">Home Page</button>
+      </form>
+      {% else %}
+      <form method="get" action="{% url 'login' %}">
+        {% csrf_token %}<button class="top-right-button" type="submit">Login</button>
+      </form>
+      {% endif %}
+    </div>
+    {% endblock %}
+    
+    {% block content %}
+    
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,160 @@
+{% extends 'productsBase.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<style>
+    body {
+        background-color: #f1e0b5;; 
+        margin: 0;
+        padding: 0;
+        font-family: Roboto, sans-serif;
+        color: #3e2723;
+    }
+
+    .content {
+        display: flex;
+        padding: 20px;
+    }
+
+    .left-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 20px;
+        background-color: #f1e0b5;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+
+    .left-side img {
+        display: block;
+        margin-bottom: 15px;
+        width: 50px;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+
+
+
+    .product-list {
+        background-color: #fff8dc;
+        padding: 30px;
+        margin: auto;
+        width: 100%;
+        max-width: 1200px;
+        border: 1px solid #3e2723;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-list h2 {
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 30px;
+        color: white;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .product {
+        background-color: white;
+        border: 1px solid #3e2723;
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: box-shadow 0.3s ease;
+    }
+
+    
+
+    .product img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+
+    .product h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #8b4513;
+    }
+
+    .product p {
+        font-size: 14px;
+        margin-bottom: 20px;
+        color: #5c3317;
+    }
+
+    
+
+    button {
+        background-color: #8b4513;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #5c3317;
+        color: #8b4513;
+        text-decoration: underline;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .section-title {
+        background-color: #8b4513;
+        color: white;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+        margin: -20px -20px 20px -20px;
+            
+    }
+</style>
+
+<div class="content">
+    <div class="left-side">
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+    </div>
+    
+    <div class="product-list">
+        <h2 class="section-title">Available Products</h2>
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <a href="{{ product.amazon_link }}" target="_blank">
+                        <button>Buy on Amazon</button>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
