@@ -17,11 +17,16 @@
             border: 3px solid #3e2723;
             padding: 10px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            position: relative;
+            
         }
-       
+        .navigation-bar-btns{
+            display: flex;
+            margin-left: 1550px;
+            gap: 10px;
+        }
 
         .content {
             display: flex;
@@ -108,11 +113,19 @@
             font-size: 12px;
             border: 1px solid black; 
         }
-        .homepage_link {
-            margin-left:1000px;
+        .homepage_link,.top-right-button{
+            
+            
             background-color: #3e2723;
-            padding: 10px 20px;
+            padding: 15px 30px;
             font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+            border-radius: 5px;
+        }
+        
+        .homepage_link:hover,.top-right-button:hover{
+            background-color: #f1e0b5;
+            transform: scale(1.1);
         }
         .navigation-bar h1{
             position: absolute;
@@ -127,10 +140,21 @@
     <div class="navigation-bar">
         <h1>Admin Page</h1>
 
-        <div>
-                <form method="POST" action="{% url 'index' %}"> 
+        <div class="navigation-bar-btns">
+            <form method="POST" action="{% url 'index' %}"> 
                 {% csrf_token %}<button class="homepage_link" type="submit">Home Page</button>
               </form>
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {%csrf_token%}
+                    <button class="top-right-button" type="submit">
+                      Logout
+                    </button>
+                </form>
+                {%endif%}
+                
+
+              
         </div>
     </div>
 <div class="content">
