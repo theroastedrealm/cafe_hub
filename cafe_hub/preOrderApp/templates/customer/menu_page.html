@@ -17,9 +17,9 @@
   .menu-content {
     flex: 1;
     padding: 20px;
-    background-color: #f1e0b5;
+    background-color: #fff8dc;
     margin-left: 20px;
-    
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -50,14 +50,15 @@
   .category {
     background-color: #fff8dc;
     border: 1px solid #3e2723;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 10px;
+    padding: 15px;
     margin: 5px;
     max-width: 1200px; 
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-   
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width:250px;
   }
 
   .category h2 {
@@ -111,6 +112,33 @@
   .orders_content{
     margin-top: 100px;
   }
+  .orders_content h2 {
+    font-size: 24px;
+    background-color: #8b4513;
+    margin-bottom: 0px;
+    text-align: center;
+    color: white;
+  }
+  .orders_content ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .orders_content li {
+    background-color: #fff8dc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #3e2723;
+    border-radius: 5px;
+  }
+  .submit_order{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  p{
+    font-size: 30px;
+  }
 </style>
       
 </style>
@@ -143,23 +171,30 @@
   </div>
 
   <div class="menu-content">
-    <h1>Menu Page</h1>
+    
     <form method="post">
       {% csrf_token %}
-      <div class="categories-container">
-        {% for category in categories %}
-          <div class="category">
-            <h2>{{ category.name }}</h2>
-            {% for item in category.items.all %}
-              <div>
-                <input type="checkbox" name="items" value="{{ item.id }}">
-                {{ item.name }}
-              </div>
-            {% endfor %}
-          </div>
-        {% endfor %}
-      </div>
-      <button type="submit">Submit Order</button>
+      {% if categories %}
+        <div class="categories-container">
+          {% for category in categories %}
+            <div class="category">
+              <h2>{{ category.name }}</h2>
+              {% for item in category.items.all %}
+                <div>
+                  <input type="checkbox" name="items" value="{{ item.id }}">
+                  {{ item.name }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="submit_order">
+          <button type="submit">Submit Order</button>
+        </div>
+      {% else %}
+        <p>No items on menu</p>
+      {% endif %}
+      
     </form>
 
     <div class="orders_content">
