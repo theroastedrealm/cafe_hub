@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser , Group
 
-
+from django.conf import settings
 
 
 
@@ -44,4 +44,8 @@ class CustomUser(AbstractUser):
             self.is_staff = False
         super(CustomUser, self).save(*args, **kwargs)
 
+
+class FavoriteCafes(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True, blank=True)
 

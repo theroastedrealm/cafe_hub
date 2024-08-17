@@ -76,6 +76,7 @@ h1 {
     max-width: 700px;
     margin: 0 auto;
     justify-content: center;
+    
 }
 
 .app {
@@ -127,11 +128,16 @@ h1 {
     height: auto;
 }   
 .right-side {
-    display: flex;
+    display: block;
     flex-direction: column;
     background-color: #f1e0b5;
     justify-content: center;
     align-self: flex-end;
+    padding: 20px;
+    position: fixed; 
+    top: 120px; 
+    right: 20px;
+    
 }
 
 .right-side img {
@@ -139,11 +145,54 @@ h1 {
     margin-bottom: 10px;
     width: 200px;
     height: auto;
+    margin-top: 500px;
 }
 .searchbtn{
     margin-right:20px;
 }
+.branchbtn{
+    margin-right: 10px;
+}
 
+
+.favorites-section {
+    margin-top: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width:350px;
+    height:100px;
+}
+
+.favorites-section h3 {
+    margin: 0 0 30px 10px;
+    font-size: 18px;
+    color: #3e2723;
+}
+
+.favorites-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+.favorites-section ul a:hover {
+    color: #8b4513;
+}
+.fav-cafe-btn{
+    width: 100px;
+    background-color: #8b4513;
+    margin-left: 10px;  
+    font-size: 16px;    
+    padding: 15px 30px;
+    
+    color: #FFF; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none; 
+    transition: background 0.3s, transform 0.3s;
+}
     </style>
 </head>
 <body>
@@ -244,9 +293,25 @@ h1 {
             {% endif %}
         </div>
         <div class="right-side">
-            <img src="{% static 'main/images/pile-of-beans.png' %}" alt="Right Image"/>
-        </div> 
-    </div>    
+            {% if favorite_cafes %}
+            <div class="favorites-section">
+                <h3>Favorite Cafes</h3>
+                <ul>
+                    {% for favorite in favorite_cafes %}
+                        {% if cafe.id != user.branch.id %}
+                        <a href="{% url 'set_current_branch' favorite.branch.id %}" class="fav-cafe-btn">{{ favorite.branch.name }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="right-side-image">
+                <img src="{% static 'main/images/pile-of-beans.png' %}" alt="Right Image"/>
+            </div>
+        </div>
+    </div>   
+
     {% else %}
         <p>Please <a href="{% url 'login' %}">sign up or log in</a> to access the dashboard.</p>
     {% endif %}
