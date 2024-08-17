@@ -112,11 +112,13 @@ def search(request):
     else:
         results = []
     
+    favorite_cafe_ids = []
+    max_favorites = 3
     if request.user.is_authenticated:
         favorite_cafes = FavoriteCafes.objects.filter(user=request.user)
+        favorite_cafe_ids = list(favorite_cafes.values_list('branch_id', flat=True))
         user_role = get_user_role(request.user)
-    else:
-        favorite_cafes = []
+    
 
     context = {
         'results': results,
@@ -126,6 +128,8 @@ def search(request):
         'zip_code_query': request.GET.get('zip_code', ''),
         'user_role': user_role,
         'favorite_cafes': favorite_cafes,
+        'favorite_cafe_ids': favorite_cafe_ids,
+        'favorites_full':len(favorite_cafe_ids) >= max_favorites,
     }
     
     return render(request, 'main/search.html', context)

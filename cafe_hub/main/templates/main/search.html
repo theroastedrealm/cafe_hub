@@ -97,6 +97,9 @@
         border-radius: 8px;
         margin-right: 10px;
     }
+    .fav-full-btn{
+        width: fit-content;
+    }
 
    
 </style>
@@ -144,10 +147,13 @@
                 {% for branch in results %}
                 <li>
                     <a href="{% url 'set_current_branch' branch.id %}" class="btn">{{ branch.name }}</a>
-                    {% if not favorite_cafes or branch.id not in favorite_cafes %}
-                        <a href="{% url 'add_to_favorites' branch.id %}" class="btn">Add to Favorites</a>
-                    {% else %}
+                    {% if favorites_full %}
+                        <span class="btn fav-full-btn">Number of favorite cafes full</span>
+                    {% elif branch.id in favorite_cafe_ids %}
                         <span class="btn in-fav-btn">Already in Favorites</span>
+                    {% else %}
+                        <a href="{% url 'add_to_favorites' branch.id %}" class="btn">Add to Favorites</a>
+                    
                     {% endif %}
                 </li>
                 {% empty %}
@@ -157,7 +163,7 @@
         </div>
 
         <div class="button-container">
-            <p>User role: {{ user_role }}</p>
+            
             {% if user.is_superuser or user_role == 'admin' %}
             <a href="{% url 'create_branch' %}" class="btn">Create a New Branch</a>
             {% endif %}

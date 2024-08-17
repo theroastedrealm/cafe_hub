@@ -298,7 +298,7 @@ h1 {
                 <h3>Favorite Cafes</h3>
                 <ul>
                     {% for favorite in favorite_cafes %}
-                        {% if cafe.id != user.branch.id %}
+                        {% if favorite.branch.id != user.branch.id %}
                         <a href="{% url 'set_current_branch' favorite.branch.id %}" class="fav-cafe-btn">{{ favorite.branch.name }}</a>
                         {% endif %}
                     {% endfor %}
