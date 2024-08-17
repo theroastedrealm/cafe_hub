@@ -134,6 +134,28 @@
             justify-content: center;
             align-items: center;
         }
+        .indicator {
+            width: 30px;
+            height: 30px;
+            border-radius: 70%;
+    
+        }
+
+        .status-pending {
+            background-color: red;
+        }
+
+        .status-noticed {
+            background-color: yellow;
+        }
+
+        .status-fulfilled {
+            background-color: green;
+        }
+
+        .status-default {
+            background-color: gray;
+        }
     </style>
 </head>
 <body>
@@ -236,7 +258,20 @@
                                     {{ item.name }}{% if not forloop.last %}, {% endif %}
                                 {% endfor %}
                             </td>
-                            <td>{{ order.status }}</td>
+                            <td>
+                                <div class="indicator 
+                                {% if order.status == 'pending' %}
+                                    status-pending
+                                {% elif order.status == 'confirmed' %}
+                                    status-noticed
+                                {% elif order.status == 'completed' %}
+                                    status-fulfilled
+                                {% else %}
+                                    status-default
+                                {% endif %}">
+                                </div>
+                           
+                            </td>
                             <td>
                                 <form method="post" style="display:inline;">
                                     {% csrf_token %}
