@@ -1,64 +1,42 @@
 {% extends 'customer/base.html' %}
-{% load static %}
-
+{% block header %}Order Confirmation{% endblock %}
 {% block content %}
+
 <style>
-body {
-    background-color: #f1e0b5; 
-    margin: 0;
-    padding: 0;
-    font-family: Roboto, sans-serif;
-}
-.content {
-    display: flex;
-    margin-top: 0px;
+
+
+    .order_confirm {
+   
+    background-color: white; 
+    border-radius: 10px; 
+    padding: 20px; 
+    max-width: 600px; 
+    margin: 20px auto; 
+    text-align: center; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-left: 500px;
+    margin-top: 100px;
     
-    height: 100vh;
 }
-.left-side {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-    background-color: #f1e0b5;      
+.back-to-menu {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #8b4513; 
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
-.left-side img {
-    display: flex;
-    margin-bottom: 10px;
-    width: 80px;
-    height: auto;
-}
-.order_confirm{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+
+.back-to-menu:hover {
+    background-color: #3e2723; 
 }
 </style>
-
-<div class="content">
-    <div class="left-side">
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-    </div>
-    
-    <div class=" order_confirm">
-        <h1>Order Confirmation</h1>
-            <p>Thank you for your order! Your order number is {{ order.order_number }}.</p>
-            <p>Status: {{ order.status }}</p>
-            <a href="{% url 'menu_page' %}">Back to Menu</a>
-    </div>
+<div class="order_confirm">
+    <h1>Order Confirmation</h1>
+    <p>Thank you for your order! Your order number is {{ order.order_number }}.</p>
+    <p>Status: {{ order.status }}</p>
+    <a href="{% url 'menu_page' %}" class="back-to-menu">Back to Menu</a>
 </div>
-{% endblock content %}
+{% endblock %}
