@@ -1,49 +1,19 @@
 {% extends 'productsBase.html' %}
 {% load static %}
 
-
+{% block header %}Products Page{% endblock %}
 
 {% block content %}
 <style>
-    body {
-        background-color: #f1e0b5;; 
-        margin: 0;
-        padding: 0;
-        font-family: Roboto, sans-serif;
-        color: #3e2723;
-    }
+   
 
-    .content {
-        display: flex;
-        padding: 20px;
-    }
-
-    .left-side {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        padding: 20px;
-        background-color: #f1e0b5;
-        border-radius: 10px;
-        margin-right: 20px;
-    }
-
-    .left-side img {
-        display: block;
-        margin-bottom: 15px;
-        width: 50px;
-        border-radius: 50%;
-        transition: transform 0.3s ease;
-    }
-
-
-
+   
     .product-list {
         background-color: #fff8dc;
         padding: 30px;
-        margin: auto;
-        width: 100%;
-        max-width: 1200px;
+        height: fit-content;
+        width: 1500px;
+        max-width: 1500px;
         border: 1px solid #3e2723;
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -96,18 +66,6 @@
         color: #5c3317;
     }
 
-    
-
-    button {
-        background-color: #8b4513;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
     button:hover {
         background-color: #5c3317;
         color: #8b4513;
@@ -122,24 +80,10 @@
         margin: -20px -20px 20px -20px;
             
     }
+    
 </style>
 
 <div class="content">
-    <div class="left-side">
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-    </div>
     
     <div class="product-list">
         <h2 class="section-title">Available Products</h2>
