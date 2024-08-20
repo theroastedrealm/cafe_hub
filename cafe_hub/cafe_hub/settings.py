@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'productService',
     'specials',
     'choiceProducts',
+    'cafePosts',
     'crispy_forms',
     'crispy_bootstrap4',
     
