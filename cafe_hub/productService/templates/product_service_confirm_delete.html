@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Confirm Delete</title>
-  </head>
-  <body>
-    <h1>Are you sure you want to delete "{{ item.name }}"?</h1>
-    <form method="post">
-      {% csrf_token %}
-      <button type="submit">Yes, delete</button>
-    </form>
-    <a href="{% url 'product_service_list' %}">Cancel</a>
-  </body>
-</html>
+{% extends 'product_service_base.html' %} {% block content %}
+<div class="center-content">
+  <h1>Are you sure you want to delete "{{ item.name }}"?</h1>
+  <form method="post" action="{% url 'product_service_delete' item.pk %}">
+    {% csrf_token %}
+    <button class="btn" type="submit">Yes, delete</button>
+  </form>
+  <a class="btn" href="{% url 'product_service_list' %}">Cancel</a>
+</div>
+{% endblock content %}

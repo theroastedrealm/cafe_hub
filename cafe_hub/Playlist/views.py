@@ -6,7 +6,9 @@ from django.urls import reverse
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
+from .models import Uploaded_file
 import requests
+
 
 
 def index(request):
@@ -19,16 +21,25 @@ def contact(request):
     return render(request, 'contact.html')
 
 #File Upload
+from .models import Uploaded_file
+
 def upload(request):
     uploaded_files = []
     if request.method == 'POST' and request.FILES.getlist('documents'):
         files = request.FILES.getlist('documents')
         file_save = FileSystemStorage()
         for file in files:
-            file_save.save(file.name, file)
-            uploaded_files.append(file.name)
-    return render(request, 'upload.html', {'uploaded_files': uploaded_files})
+            saved_file = file_save.save(file.name, file)
+            file_url = file_save.url(saved_file)
+            uploaded_files.append(file_url)  # Store file URLs
 
+            # Save file details to the database
+            Uploaded_file.objects.create(
+                name=file.name,
+                file_link=file_url,
+            )
+
+    return render(request, 'upload.html', {'uploaded_files': uploaded_files})
 
 
 # YouTube API 
@@ -71,15 +82,14 @@ def credentials_to_dict(credentials):
         'scopes': credentials.scopes
     }
 
+
 def playlist(request):
-    # Check if the user is authenticated (i.e., has Google credentials)
     if 'credentials' not in request.session:
-        return redirect('youtube_auth')  # Redirect to Google OAuth flow if not authenticated
+        return redirect('youtube_auth')
 
     credentials = Credentials(**request.session['credentials'])
     youtube = build('youtube', 'v3', credentials=credentials)
 
-    # Get playlists
     playlists_response = youtube.playlists().list(
         part="snippet",
         mine=True
@@ -87,9 +97,18 @@ def playlist(request):
 
     playlists = []
 
-    # Get videos from all the playlists available
     for playlist in playlists_response.get('items', []):
         playlist_id = playlist['id']
+        playlist_name = playlist['snippet']['title']
+        playlist_link = f"https://www.youtube.com/playlist?list={playlist_id}"  # Updated 'url' to 'link'
+
+        # Save playlist to database
+        YoutubePlaylist.objects.create(
+            name=playlist_name,
+            link=playlist_link,  # Updated 'url' to 'link'
+        )
+
+        # Fetch playlist items if needed
         playlist_items_response = youtube.playlistItems().list(
             part="snippet,contentDetails",
             playlistId=playlist_id,
@@ -105,7 +124,6 @@ def playlist(request):
                     id=video_id
                 ).execute()
 
-                # Check if the video is embeddable and public
                 if (video_response['items'] and
                         video_response['items'][0]['status']['embeddable'] and
                         video_response['items'][0]['status']['privacyStatus'] == 'public'):
@@ -119,7 +137,6 @@ def playlist(request):
             playlist['videos'] = videos
             playlists.append(playlist)
 
-    # Store credentials in session
     request.session['credentials'] = credentials_to_dict(credentials)
 
     return render(request, 'playlist.html', {'playlists': playlists})
@@ -154,17 +171,18 @@ def logout_view(request):
 
 
 
-
-# Spotify
-# views.py
+##############################################################################################################################
+# Spotify# views.py
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 import spotipy
-from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 import json
 import os
 from datetime import datetime, timedelta
+from .models import SpotifyPlaylist
+from .models import YoutubePlaylist
+
 
 # Load credentials from JSON file
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -176,8 +194,6 @@ SPOTIFY_CLIENT_SECRET = credentials['SPOTIFY_CLIENT_SECRET']
 SPOTIFY_REDIRECT_URI = credentials['SPOTIFY_REDIRECT_URI']
 # Define Spotify scopes as a constant
 SPOTIFY_SCOPES = 'user-read-playback-state user-modify-playback-state playlist-read-private'
-
-
 
 def spotify_login(request):
     sp_oauth = SpotifyOAuth(
@@ -220,8 +236,10 @@ def spotify_playlists(request):
             'tracks': track_uris
         })
     
+    # Save playlists to the database
+    save_playlists_to_db(playlists)
+    
     return render(request, 'spotify.html', {'playlists': playlists, 'access_token': token_info['access_token']})
-
 
 def is_token_expired(token_info):
     # Check if the token has expired
@@ -235,3 +253,34 @@ def refresh_access_token(sp_oauth, refresh_token):
 def get_access_token(request):
     token_info = request.session.get('token_info')
     return JsonResponse({'access_token': token_info['access_token']})
+
+def save_playlists_to_db(playlists):
+    for playlist in playlists:
+        SpotifyPlaylist.objects.create(
+            name=playlist['name'],
+            link=playlist['external_urls']['spotify']
+        )
+
+
+def spotify_logout(request):
+    token_info = request.session.get('token_info')
+    
+    if token_info:
+        access_token = token_info.get('access_token')
+        if access_token:
+            try:
+                # Revoke the token on Spotify's side (Note: Spotify doesn't provide a direct revoke endpoint for access tokens)
+                # Here, you can simulate the revocation or simply delete the session data
+                
+                print("Token will be revoked (not actually possible via Spotify API).")
+            except requests.RequestException as e:
+                print(f"Error: {e}")
+        
+        # Clear Spotify token from session
+        del request.session['token_info']
+
+    # Clear all session data
+    request.session.flush()
+
+    # Redirect to the index page (or wherever you prefer)
+    return redirect('index')  # Adjust the redirect URL as needed

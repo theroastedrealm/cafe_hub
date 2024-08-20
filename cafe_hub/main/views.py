@@ -4,7 +4,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from .decorators import unauthenticated_user
-from main.models import Branch
+from main.models import Branch, FavoriteCafes
 from .forms import SignUpForm
 from .forms import BranchForm
 from django.contrib.auth.decorators import user_passes_test
@@ -112,20 +112,24 @@ def search(request):
     else:
         results = []
     
+    favorite_cafe_ids = []
+    max_favorites = 3
     if request.user.is_authenticated:
+        favorite_cafes = FavoriteCafes.objects.filter(user=request.user)
+        favorite_cafe_ids = list(favorite_cafes.values_list('branch_id', flat=True))
         user_role = get_user_role(request.user)
-        print(f"Authenticated user: {request.user.username}, Role: {user_role}")
-    else:
-        user_role = 'unknown'
-        print("User is not authenticated")
     
+
     context = {
         'results': results,
         'name_query': request.GET.get('name', ''),
         'address_query': request.GET.get('address', ''),
         'city_query': request.GET.get('city', ''),
         'zip_code_query': request.GET.get('zip_code', ''),
-        'user_role': user_role
+        'user_role': user_role,
+        'favorite_cafes': favorite_cafes,
+        'favorite_cafe_ids': favorite_cafe_ids,
+        'favorites_full':len(favorite_cafe_ids) >= max_favorites,
     }
     
     return render(request, 'main/search.html', context)
@@ -135,10 +139,12 @@ def search(request):
 def index(request):
     user_branch = getattr(request.user, 'branch', None) 
     #user_branch = request.user.branch
+    favorite_cafes =FavoriteCafes.objects.filter(user=request.user).exclude(id=request.user.branch.id)
     context = {
         'user_role': getattr(request.user, 'role', None),
         #'user_role': request.user.role,
-        'user_branch': user_branch
+        'user_branch': user_branch,
+        'favorite_cafes': favorite_cafes,
     }
     
     return render(request, 'main/index.html', context)
@@ -196,3 +202,20 @@ def set_current_branch(request, branch_id):
         request.user.branch = branch
         request.user.save()
         return redirect('housingpage')
+
+
+@login_required
+def add_to_favorites(request, branch_id):
+    
+    if FavoriteCafes.objects.filter(user=request.user).count() < 3:
+        branch = get_object_or_404(Branch, id=branch_id)
+        FavoriteCafes.objects.get_or_create(user=request.user, branch=branch)
+    return redirect('search')  
+
+
+@login_required
+def remove_from_favorites(request, branch_id):
+
+    branch = get_object_or_404(Branch, id=branch_id)
+    FavoriteCafes.objects.filter(user=request.user, branch=branch).delete()
+    return redirect('search')

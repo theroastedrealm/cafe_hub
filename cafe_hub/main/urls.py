@@ -21,6 +21,8 @@ urlpatterns = [
     path('redirect-admin/<str:branch_name>/', views.redirect_to_branch_admin, name='redirect_admin'),
     path('branches/', views.branchesView, name='branches'),
     path('set_current_branch/<int:branch_id>/', views.set_current_branch, name='set_current_branch'),
+    path('add-to-favorites/<int:branch_id>/', views.add_to_favorites, name='add_to_favorites'),
+    path('remove-from-favorites/<int:branch_id>/', views.remove_from_favorites, name='remove_from_favorites'),
 ]
 
 

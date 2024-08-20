@@ -15,6 +15,8 @@ class Index(TemplateView):
     
 class Dashboard(View):
     def get(self, request):
+        if not request.user.is_staff:
+            return redirect('menu_page')
         branch = request.user.branch
         items = InventoryItem.objects.filter(branch=branch).order_by('id')
     

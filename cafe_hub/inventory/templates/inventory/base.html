@@ -22,12 +22,7 @@
         background-color: #f1e0b5;
         color: #6d6875;
       }
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
+      h1,h2,h3,h4,h5,h6 {
         color: #837e9f;
         font-weight: bold;
       }
@@ -87,9 +82,10 @@
         margin-left: 20px; /* Adjust this value to move the entire column to the left */
       }
       .left-side img {
+        display: flex;
         margin-bottom: 10px;
-        width: 50px;
-        margin-left: 0; /* Reset margin-left for individual images */
+        width: 80px;
+        height: auto;
       }
 
       .header {
@@ -126,16 +122,12 @@
         background-color: #f1e0b5;
         transform: scale(1.1);
       }
-      {% comment %} .staffpage_link {
-        right: 160px;
-      }
-      .staffpage_link:hover {
-        background-color: #f1e0b5;
-        transform: scale(1.1);
-      } {% endcomment %}
-
       .homepage_link {
         right: 165px;
+      }
+      .homepage_link:hover {
+        background-color: #f1e0b5;
+        transform: scale(1.1);
       }
       .indicator {
         width: 20px;
@@ -156,12 +148,6 @@
         {% csrf_token %}
         <button class="top-right-button" type="submit">Logout</button>
       </form>
-      {% if is_staff or user.is_superuser %}
-      <form method="POST" action="{% url 'staffpage' %}">
-        {% csrf_token %}
-        <button class="staffpage_link" type="submit">Staff Page</button>
-      </form>
-      {% endif %}
       <form method="POST" action="{% url 'index' %}">
         {% csrf_token %}
         <button class="homepage_link" type="submit">Home Page</button>
@@ -177,14 +163,6 @@
 
     <div class="main-content d-flex">
       <div class="left-side">
-        <img
-          src="{% static 'main/images/coffee-bean.png' %}"
-          alt="Left Image"
-        />
-        <img
-          src="{% static 'main/images/coffee-bean.png' %}"
-          alt="Left Image"
-        />
         <img
           src="{% static 'main/images/coffee-bean.png' %}"
           alt="Left Image"

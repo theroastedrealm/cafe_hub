@@ -1,9 +1,9 @@
- {% extends "base.html" %}
+{% extends "specialsBase.html" %}
 {% block content %}
 <head>
   <style>
     .specials {
-        background-color: #ffffff;
+        background-color: #fff8dc;
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -38,7 +38,7 @@
     }
 
     .special {
-      background-color: #f9f9f9;
+      background-color: #f9f5f0;
       border: 1px solid #ddd;
       border-radius: 5px;
       margin-bottom: 15px;
@@ -68,6 +68,16 @@
     margin-bottom: 10px;
     cursor: pointer;
   }
+  .delete_button button{
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
   .create_section {
     padding: 20px;
     margin: 20px auto;
@@ -101,17 +111,19 @@
 }
 
 .create_section button {
-    background-color: #48bb78;
+    background-color: #8b4513;
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.create_section button:hover {
-    background-color: #38a169;
+.create_section button:hover, .delete_button button:hover {
+    background-color: #5c3317;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
 }
 </style>
 </head>

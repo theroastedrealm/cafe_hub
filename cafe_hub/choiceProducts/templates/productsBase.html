@@ -1,0 +1,141 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Coffee Shop</title>
+   
+    <style>
+        body {
+            background-color: #f1e0b5; 
+            margin: 0;
+            padding: 0;
+            font-family: Roboto, sans-serif;
+        }
+
+        .navigation-bar {
+            background-color: #8b4513;
+            color: white; 
+            border: 3px solid #3e2723;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            align-items: center;
+            
+        }
+
+        .navigation-bar-btns {
+            display: flex;
+            gap: 10px;
+            position: fixed;
+            right: 10px;
+            position: absolute;
+        }
+
+        .content {
+            display: flex;
+            margin-top: 10px;
+            
+            
+        }
+
+        .left-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 20px;
+        background-color: #f1e0b5;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+
+
+        .left-side img {
+            display: block;
+            margin-bottom: 10px;
+            width: 80px;
+            height: auto;
+        }
+
+
+
+        button {
+            background-color: #8b4513;
+            color: white;
+            border: none;
+            padding: 10px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            margin: 5px;
+            font-size: 12px;
+            border: 1px solid black;
+        }
+
+
+        .homepage_link, .top-right-button {
+            background-color: #3e2723;
+            padding: 15px 30px;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+            border-radius: 5px;
+            
+        }
+
+        .homepage_link:hover, .top-right-button:hover {
+            background-color: #f1e0b5;
+            transform: scale(1.1);
+        }
+
+
+        p {
+            font-size: 30px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="navigation-bar">
+        <h1>{% block header %}Header{% endblock %}</h1>
+        <div class="navigation-bar-btns">
+            <form method="POST" action="{% url 'index' %}"> 
+                {% csrf_token %}<button class="homepage_link" type="submit">Home Page</button>
+            </form>
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class="top-right-button" type="submit">Logout</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="left-side">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
+            </div>
+    
+    {% block content %}
+   
+    {% endblock %}
+    
+
+</div>

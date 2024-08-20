@@ -1,163 +1,96 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Page</title>
-    <style> 
-         body {
-            background-color: #f1e0b5; 
-            margin: 0;
-            padding: 0;
-            font-family: Roboto, sans-serif;
-        }
+{% extends 'customer/base.html' %}
+{% block header %}Admin Page{% endblock %}
+{% block content %}
+<style>
+    .admin-content {
+        display: flex;
+        justify-content: space-between;
+        width: fit-content;
+        max-width: 1800px;
+        margin: 30px;
+        margin-bottom: auto;
+        padding: 0 20px;
+        border-radius: 20px;
+        gap:70px;
+    }
+    .right-section{
+        background-color: white;
+        padding: 10px;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .order-content {
+        background-color: #fff8dc;
+        border: 1px solid #3e2723;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 20px 0;
+        width: auto;
+        text-align: center;
+        flex-grow: 1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .left-section{
+        background-color: white;
+        padding: 10px;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        .navigation-bar {
-            background-color: #8b4513;
-            color: white; 
-            border: 3px solid #3e2723;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            justify-content: center;
-        }
-       
+    .section {
+        background-color: #fff8dc;
+        border: 1px solid #3e2723;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 20px 0;
+        width: auto;
+        text-align: center;
+        flex-grow: 1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .section-title{
+        background-color: #8b4513;
+        color: white;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+        margin: -20px -20px 20px -20px;
+    }
 
-        .content {
-            display: flex;
-            margin-top: 10px;
-        }
+    .indicator {
+        width: 30px;
+        height: 30px;
+        border-radius: 70%;
+    }
 
-        .left-side {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 20px;
-            background-color: #f1e0b5;
-            
-        }
+    .status-pending {
+        background-color: red;
+    }
 
-        .left-side img {
-            display: flex;
-            margin-bottom: 10px;
-            width: 80px;
-            height: auto;
-        }
-        .right-section{
-            background-color: #fff8dc;
-            padding: 20px;
-        }
-        .admin-content {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 1400px;
-            margin: 40px;
-            margin-bottom: auto;
-            padding: 0 20px;
-        }
+    .status-noticed {
+        background-color: yellow;
+    }
 
-        .section {
-            background-color: #fff8dc;
-            border: 1px solid #3e2723;
-            border-radius: 5px;
-            padding: 20px;
-            margin: 20px 0; 
-            width: auto;
-            text-align: center;
-            flex-grow: 1;
-        }
+    .status-fulfilled {
+        background-color: green;
+    }
 
-        .section-title {
-            background-color: #8b4513;
-            color: white;
-            padding: 10px;
-            border-radius: 5px 5px 0 0;
-            margin: -20px -20px 20px -20px;
-            
-        }
+    .status-default {
+        background-color: gray;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            
-        }
+    .submit_order {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-
-        button {
-            background-color: #8b4513;
-            color: white;
-            border: none;
-            padding: 10px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            margin: 5px;
-            font-size: 12px;
-            border: 1px solid black; 
-        }
-        .homepage_link {
-            margin-left:1000px;
-            background-color: #3e2723;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-        .navigation-bar h1{
-            position: absolute;
-        }
-        .right-section h2 {
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
-</head>
-<body>
-    <div class="navigation-bar">
-        <h1>Admin Page</h1>
-
-        <div>
-                <form method="POST" action="{% url 'index' %}"> 
-                {% csrf_token %}<button class="homepage_link" type="submit">Home Page</button>
-              </form>
-        </div>
-    </div>
-<div class="content">
-    
-    <div class="left-side">
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image"/>
-    </div>
-    
+</style>
     <div class="admin-content">
-        
         <div class="left-section">
             <div class="section">
                 <h2 class="section-title">Add Category</h2>
                 <form method="post">
-                    {% csrf_token %}
+                {% csrf_token %}
                     <input type="text" name="category_name" placeholder="Category Name" required>
                     <button type="submit" name="add_category">Add Category</button>
                 </form>
@@ -189,53 +122,83 @@
                     <button type="submit" name="add_item">Add Item</button>
                 </form>
             </div>
+
+            <div class="section">
+                <h2 class="section-title">Delete Item</h2>
+                <form method="post">
+                    {%csrf_token%}
+                    <select name="item_id" required>
+                        {% for item in items %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" name="delete_item">Delete Item</button>
+                </form>
+            </div>
         </div>
+
         <div class="right-section">
-            <h2 class="section-title">Orders</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Order Number</th>
-                        <th>Customer Name</th>
-                        <th>Items</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for order in orders %}
+            <div class="order-content">
+                <h2 class="section-title">Orders</h2>
+                <table>
+                    <thead>
                         <tr>
-                            <td>{{ order.order_number }}</td>
-                            <td>{{ order.customer.username }}</td>
-                            <td>
-                                {% for item in order.items.all %}
-                                    {{ item.name }}{% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            </td>
-                            <td>{{ order.status }}</td>
-                            <td>
-                                <form method="post" style="display:inline;">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="order_id" value="{{ order.id }}">
-                                    <button type="submit" name="confirm_order">Confirm Order</button>
-                                </form>
-                                <form method="post" style="display:inline;">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="order_id" value="{{ order.id }}">
-                                    <button type="submit" name="completed_order">Completed Order</button>
-                                </form>
-                                <form method="post" style="display:inline;">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="order_id" value="{{ order.id }}">
-                                    <button type="submit" name="delete_order">Delete Order</button>
-                                </form>
-                            </td>
+                            <th>Order Number</th>
+                            <th>Customer Name</th>
+                            <th>Items</th>
+                            <th>Status</th>
+                            <th>Actions</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.order_number }}</td>
+                                <td>{{ order.customer.username }}</td>
+                                <td>
+                                    {% for item in order.items.all %}
+                                        {{ item.name }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                                    
+                                <td>
+                                    <div class="indicator 
+                                    {% if order.status == 'pending' %}
+                                        status-pending
+                                    {% elif order.status == 'confirmed' %}
+                                        status-noticed
+                                    {% elif order.status == 'completed' %}
+                                        status-fulfilled
+                                    {% else %}
+                                        status-default
+                                    {% endif %}">
+                                    </div>
+                                
+                                </td>
+                                <td>
+                                    <form method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                                        <button type="submit" name="confirm_order">Confirm Order</button>
+                                    </form>
+                                    <form method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                                        <button type="submit" name="completed_order">Completed Order</button>
+                                    </form>
+                                    <form method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                                        <button type="submit" name="delete_order">Delete Order</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </div>
-</div>
-</body>
-</html>
+    
+{% endblock %}

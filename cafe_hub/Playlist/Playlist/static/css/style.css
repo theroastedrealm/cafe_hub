@@ -1,0 +1,117 @@
+/* static/css/style.css */
+
+body {
+    background-color: #f1e0b5; /* Page background color */
+    margin: 0; /* Ensure no default margins affect layout */
+    padding: 0; /* Ensure no default padding affects layout */
+}
+
+header {
+    background-color: #8b4513; /* Header background color */
+    color: #fff; /* White text color */
+    padding: 10px; /* Padding for header */
+    width: 100%; /* Ensure full width */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+nav {
+    background-color: #8b4513; /* Navbar background color */
+    color: #fff; /* White text color */
+    padding: 10px; /* Padding for navbar */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+
+/* styles.css */
+
+.navbar-container {
+    display: flex; /* Align buttons horizontally */
+    gap: 20px; /* Space between buttons */
+    align-items: center; /* Center align items vertically */
+}
+
+.nav-logo {
+
+    
+    height: auto; /* Maintain aspect ratio */
+}
+
+.upload-logo {
+    width: 70px; /* Size for Upload logo */
+}
+
+.youtube-logo {
+    width: 150px; /* Size for YouTube logo */
+}
+
+.spotify-logo {
+    width: 150px; /* Size for Spotify logo */
+}
+
+.column {
+    background-color: #fff8dc; /* Column background color */
+    padding: 20px; /* Padding for column */
+}
+
+/* Ensure footer or other sections have consistent background if needed */
+footer {
+    background-color: #8b4513; /* Footer background color */
+    color: #fff; /* White text color */
+    padding: 10px; /* Padding for footer */
+    width: 100%; /* Ensure full width */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+
+/* static/css/style.css */
+
+/* Existing styles... */
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f1e0b5;
+  }
+
+  .left-side img {
+    display: block;
+    margin-bottom: 10px;
+    width: 50px;
+  }
+
+  .column {
+    background-color: #fff8dc; /* Column background color */
+    padding: 20px; /* Padding for column */
+    text-align: center; /* Center align text */
+}
+
+.logout-container {
+    position: absolute; /* Position absolutely */
+    top: 10px; /* Distance from top */
+    right: 10px; /* Distance from right */
+}
+
+
+.playlists-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    padding: 20px; /* Padding around the content */
+}
+
+.playlist {
+    margin: 20px 0; /* Space between playlists */
+    text-align: center; /* Center align text inside playlist */
+}
+
+.playlist iframe {
+    margin-top: 10px; /* Space between description and video */
+}
+
+/* Adjustments for form */
+form {
+    text-align: center; /* Center align the logout button */
+}

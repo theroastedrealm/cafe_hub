@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_beat',
     'main',
     'preOrderApp',
     'seating_main',
@@ -45,8 +46,10 @@ INSTALLED_APPS = [
     'Playlist',
     'productService',
     'specials',
+    'choiceProducts',
     'crispy_forms',
     'crispy_bootstrap4',
+    
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -131,6 +134,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
 # Default primary key field type
