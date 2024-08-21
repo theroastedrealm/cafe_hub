@@ -1,0 +1,111 @@
+<!-- templates/playlists.html -->
+
+{% extends "base.html" %}
+
+{% load static %} <!-- Add this line to load the static files template tag library -->
+
+{% block title %}Playlists{% endblock %}
+
+{% block content %}
+<div class="column">
+    <h1>Your YouTube Playlists</h1>
+</div>
+
+<!-- Logout Button -->
+<div class="logout-container">
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+</div>
+
+<div class="left-side">
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+    <img
+      src="{% static 'main/images/coffee-bean.png' %}"
+      alt="Left Image"
+    />
+  </div>
+
+
+<div class="playlists-container">
+    {% if playlists %}
+        {% for playlist in playlists %}
+            <div class="playlist">
+                <h2>{{ playlist.snippet.title }}</h2>
+                <p>{{ playlist.snippet.description }}</p>
+
+                {% if playlist.videos %}
+                    {% with first_video=playlist.videos.0 %}
+                        {% if playlist.videos|length == 1 %}
+                            <!-- Single video, play it directly -->
+                            <iframe width="560" height="315"
+                                    src="https://www.youtube.com/embed/{{ first_video.contentDetails.videoId }}"
+                                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                            </iframe>
+                        {% else %}
+                            <!-- Multiple videos, create a playlist -->
+                            <iframe width="560" height="315"
+                                    src="https://www.youtube.com/embed/?playlist={% for video in playlist.videos %}{{ video.contentDetails.videoId }}{% if not forloop.last %},{% endif %}{% endfor %}&autoplay=1"
+                                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                            </iframe>
+                        {% endif %}
+                    {% endwith %}
+                {% else %}
+                    <p>There are no videos in this playlist. Please select another account.</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No playlists found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

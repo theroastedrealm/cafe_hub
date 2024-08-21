@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="column">
+    <h1>Upload</h1>
+</div>
+
+<!-- Form to upload files and create a playlist -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <!-- Input for the playlist name -->
+    <div style="margin-bottom: 15px;">
+        <input type="text" name="playlist_name" placeholder="Enter playlist name" required style="
+            width: 100%; /* Full-width input */
+            padding: 10px; /* Add padding for a bigger input field */
+            font-size: 1.2em; /* Increase font size */
+            border-radius: 5px; /* Rounded corners */
+            border: 1px solid #ccc; /* Light border */
+        ">
+    </div>
+    
+    <!-- File input for selecting MP3 files -->
+    <input type="file" name="documents" multiple accept=".mp3" style="
+        padding: 10px; /* Padding for better touchability */
+        margin-bottom: 15px; /* Space below the file input */
+        font-size: 1.2em; /* Increase font size */
+    ">
+
+    <!-- Upload button -->
+    <button type="submit" style="
+        font-size: 1.2em; /* Increase font size */
+        padding: 15px 30px; /* Increase padding for a bigger button */
+        background-color: #007bff; /* Change button background color */
+        color: white; /* Change text color */
+        border: none; /* Remove default border */
+        border-radius: 20px; /* Add rounded corners */
+        cursor: pointer; /* Change cursor to pointer on hover */
+        margin-top: 10px; /* Add space above the button */
+        transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    ">
+        Upload files
+    </button>
+</form>
+
+<!-- Display any error or success messages -->
+{% if messages %}
+    <div style="text-align: center; margin: 20px 0;">
+        {% for message in messages %}
+            <p style="
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 1.5em; /* Adjust font size as needed */
+                color: #d9534f; /* Bootstrap red color, or choose your color */
+                background-color: #f2dede; /* Light red background */
+                border: 1px solid #d9534f;
+                border-radius: 5px;
+                margin: 0;
+            " class="alert {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<!-- Display the uploaded files and the audio player -->
+{% if uploaded_files %}
+    <h3>Uploaded Files:</h3>
+    <div>
+        <!-- Audio player with playlist functionality -->
+        <audio id="audio-player" controls>
+            Your browser does not support the audio element.
+        </audio>
+        <div id="current-track-name" style="font-weight: bold; margin-top: 10px;">
+            <!-- Track name will appear here -->
+        </div>
+        <ul id="playlist" style="list-style-type: none; padding: 0;">
+        {% for file in uploaded_files %}
+            <li data-src="{{ file.url }}" data-name="{{ file.name }}" style="cursor: pointer; margin-bottom: 10px;">
+                {{ file.name }}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<!-- JavaScript to handle playlist functionality -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var audioPlayer = document.getElementById('audio-player');
+        var playlist = document.getElementById('playlist');
+        var currentTrackName = document.getElementById('current-track-name');
+        var tracks = playlist.getElementsByTagName('li');
+        var currentTrack = 0;
+
+        function playTrack(index) {
+            var track = tracks[index];
+            audioPlayer.src = track.getAttribute('data-src');
+            currentTrackName.textContent = track.getAttribute('data-name');
+            audioPlayer.play();
+        }
+
+        // Automatically play the next track when the current track ends
+        audioPlayer.addEventListener('ended', function() {
+            currentTrack++;
+            if (currentTrack < tracks.length) {
+                playTrack(currentTrack);
+            }
+        });
+
+        // Allow user to click on a track to play it
+        for (var i = 0; i < tracks.length; i++) {
+            (function(index) {
+                tracks[index].addEventListener('click', function() {
+                    currentTrack = index;
+                    playTrack(index);
+                });
+            })(i);
+        }
+
+        // Start by playing the first track
+        if (tracks.length > 0) {
+            playTrack(0);
+        }
+    });
+</script>
+
+{% endblock %}

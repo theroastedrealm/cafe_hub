@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Spotify{% endblock %}
+
+{% block content %}
+
+<div class="logout-container">
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+</div>
+
+<div class="column">
+    <h1>Your Spotify Playlists</h1>
+</div>
+
+<div class="content-container" style="display: flex; flex-direction: column; align-items: center;">
+    <ul style="list-style-type: none; padding-left: 0; text-align: center;">
+        {% for playlist in playlists %}
+            <li style="margin-bottom: 20px;">
+                <!-- Link to Spotify Web Player with larger font size and underline -->
+                <a href="{{ playlist.external_urls.spotify }}" target="_blank" style="font-size: 24px; font-weight: bold; text-decoration: underline;">
+                    {{ playlist.name }}
+                </a>
+                
+                <!-- Embed Spotify Player -->
+                <div style="display: flex; justify-content: center;">
+                    <iframe src="https://open.spotify.com/embed/playlist/{{ playlist.id }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="left-side">
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'main/images/coffee-bean.png' %}" alt="Left Image" />
+</div>
+
+{% endblock %}
