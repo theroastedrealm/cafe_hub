@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite
-from main.models import Branch
+from main.models import Branch, CustomUser
 from .models import InventoryItem, Category
 
 class InventoryItemAdmin(admin.ModelAdmin):
@@ -21,8 +21,15 @@ class InventoryItemAdmin(admin.ModelAdmin):
         form = super().get_form(request, obj, **kwargs)
         if not request.user.is_superuser:
             form.base_fields['branch'].queryset = Branch.objects.filter(id=request.user.branch.id)
+            form.base_fields['user'].queryset = CustomUser.objects.filter(id=request.user.id)
         return form
     
+    def save_model(self, request, obj, form, change):
+        if not request.user.is_superuser:
+            obj.user = request.user 
+            obj.branch = request.user.branch
+        super().save_model(request, obj, form, change)
+
 admin.site.register(InventoryItem, InventoryItemAdmin)
 
 

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Seat
 from main.models import Branch
-from main.models import Branch
+
 # Register your models here.
 class SeatAdmin(admin.ModelAdmin):
     list_display=['name','available','branch']

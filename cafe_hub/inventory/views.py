@@ -41,12 +41,12 @@ class AddItem(CreateView):
     form_class = InventoryItemForm
     template_name = 'inventory/item_form.html'
     success_url = reverse_lazy('dashboard')
-    
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
     # these two methods are used to pass the categories to the form
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
-        return context
     
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -59,12 +59,24 @@ class EditItem(UpdateView):
     form_class = InventoryItemForm 
     template_name = 'inventory/item_form.html'
     success_url = reverse_lazy('dashboard')
+
+    def get_queryset(self):
+        branch = self.request.user.branch
+        return InventoryItem.objects.filter(branch=branch)
     
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 class DeleteItem(DeleteView):
     model = InventoryItem
     template_name = 'inventory/delete_item.html'
     success_url = reverse_lazy('dashboard')
     content_object_name = 'item'
+
+    def get_queryset(self):
+        branch = self.request.user.branch
+        return InventoryItem.objects.filter(branch=branch)
     
     
     

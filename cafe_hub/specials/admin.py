@@ -4,7 +4,7 @@ from main.models import Branch
 from .models import Special
 # Register your models here.
 class SpecialsAdmin(admin.ModelAdmin):
-    list_display=['name','description','branch']
+    list_display=['name','description','image','branch']
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
