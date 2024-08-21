@@ -3,7 +3,29 @@
 {% load static %}
 
 {% block content %}
-<div class="column">
+
+<style>
+     .section {
+        background-color: #fff8dc;
+        border: 1px solid #3e2723;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 20px 0;
+        width: auto;
+        text-align: center;
+        flex-grow: 1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .section-title{
+        background-color: #8b4513;
+        color: white;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+        margin: -20px -20px 20px -20px;
+    }
+</style>
+<div class="section">
+<div class="section-title">
     <h1>Upload</h1>
 </div>
 
@@ -33,7 +55,7 @@
     <button type="submit" style="
         font-size: 1.2em; /* Increase font size */
         padding: 15px 30px; /* Increase padding for a bigger button */
-        background-color: #007bff; /* Change button background color */
+        background-color: #8b4513; /* Change button background color */
         color: white; /* Change text color */
         border: none; /* Remove default border */
         border-radius: 20px; /* Add rounded corners */
@@ -146,26 +168,9 @@
         }
     });
 </script>
-
-
-
-<div class="left-side">
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
-
 </div>
+
+
+
 
 {% endblock %}
