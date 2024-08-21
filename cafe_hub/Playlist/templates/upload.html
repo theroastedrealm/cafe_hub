@@ -1,73 +1,45 @@
 {% extends 'base.html' %}
 
 {% load static %} <!-- Add this line to load the static files template tag library -->
-
+{% block header %}Playlist{% endblock %}
 {% block content %}
-<div class="column">
-<h2>Upload</h2>
-</div>
-
-
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="file" name="documents" multiple accept=".mp3">
-    <button type="submit">Upload files</button>
-</form>
-
-<div class="left-side">
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
-    <img
-      src="{% static 'main/images/coffee-bean.png' %}"
-      alt="Left Image"
-    />
+<style>
+  .section {
+        background-color: #fff8dc;
+        border: 1px solid #3e2723;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 20px 0;
+        width: auto;
+        text-align: center;
+        flex-grow: 1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .section-title{
+        background-color: #8b4513;
+        color: white;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+        margin: -20px -20px 20px -20px;
+    }
+</style>
+<div class="section"> 
+  <div class="section-title">
+  <h2>Upload your music</h2>
   </div>
+
+
+  <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name="documents" multiple accept=".mp3">
+      <button type="submit">Upload files</button>
+  </form>
+  {% url 'playlist' as playlist_url %}
+  <span>{% if request.path == playlist_url %}Your YouTube Playlists{% else %}<a href="{{ playlist_url }}">Login to YouTube</a>{% endif %}</span>
+
+  {% url 'spotify' as spotify_url %}
+  <span>{% if request.path == spotify_url %} Spotify {% else %}<a href="{{ spotify_url }}"> Spotify Playlists</a>{% endif %}</span>
+</div>
 
 {% if uploaded_files %}
     <h3>Uploaded Files:</h3>

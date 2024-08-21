@@ -11,14 +11,7 @@ import requests
 
 
 
-def index(request):
-    return render(request, 'index.html')
 
-def about(request):
-    return render(request, 'about.html')
-
-def contact(request):
-    return render(request, 'contact.html')
 
 #File Upload
 from .models import Uploaded_file
@@ -37,8 +30,9 @@ def upload(request):
             Uploaded_file.objects.create(
                 name=file.name,
                 file_link=file_url,
+                branch=request.user.branch,
             )
-
+   #uploaded_files = Uploaded_file.objects.filter(branch=request.user.branch)
     return render(request, 'upload.html', {'uploaded_files': uploaded_files})
 
 
@@ -107,7 +101,6 @@ def playlist(request):
             name=playlist_name,
             link=playlist_link,  # Updated 'url' to 'link'
         )
-
         # Fetch playlist items if needed
         playlist_items_response = youtube.playlistItems().list(
             part="snippet,contentDetails",

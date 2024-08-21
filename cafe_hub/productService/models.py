@@ -4,13 +4,15 @@ from django.dispatch import receiver
 from django.conf import settings
 import os
 
+from main.models import Branch
+
 class ProductService(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='productService/images/', editable=True) 
     video = models.FileField(upload_to='productService/videos/', null=True, blank=True, editable=True)
     link = models.URLField()
-
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=False, blank=False, default=1)
     def __str__(self):
         return self.name
 

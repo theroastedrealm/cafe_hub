@@ -26,10 +26,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.index, name='playlist_index'),
-    path('about/', views.about, name='about'),
-    path('contact/', views.contact, name='contact'),
+    
+    
     path('upload/', views.upload, name='upload'),
     path('youtube_auth/', views.youtube_auth, name='youtube_auth'),
     path('oauth2callback/', views.oauth2callback, name='oauth2callback'),
