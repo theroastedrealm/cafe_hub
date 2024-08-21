@@ -19,14 +19,14 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from django_cron import CronJobManager
+#from django_cron import CronJobManager
 from django.contrib import admin
 from django.urls import path
 from .import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
+    path('', views.index, name='playlist_index'),
     path('upload/', views.upload, name='upload'),
     path('youtube_auth/', views.youtube_auth, name='youtube_auth'),
     path('oauth2callback/', views.oauth2callback, name='oauth2callback'),
@@ -38,7 +38,7 @@ urlpatterns = [
     path('callback/', views.callback, name='callback'),
     path('spotify_playlists/', views.spotify_playlists, name='spotify_playlists'),
     
-    path('admin_homepage/', views.admin_homepage, name='admin_homepage')
+    path('admin_homepage/', views.admin_homepage, name='playlist_admin_homepage')
 
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
