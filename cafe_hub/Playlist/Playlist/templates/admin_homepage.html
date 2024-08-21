@@ -1,0 +1,124 @@
+{% load static %}
+
+{% block header %}
+    <div style="background-color: #8b4513; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 43px;">
+        Upload Playlist
+    </div>
+{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #f1e0b5; /* Background color for the entire page */
+        margin: 0;
+        font-family: Arial, sans-serif;
+            
+    }
+
+    .admin-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+    }
+
+    .admin-content {
+        background-color: white; /* Background color for content sections */
+        padding: 20px;
+        width: 48%;
+        border: 1px solid #3e2723;
+        border-radius: 10px;
+        text-align: center;
+        margin: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .admin-content:hover {
+        transform: scale(1.02);
+    }
+
+    .section-title {
+        background-color: #8b4513;
+        color: white;
+        padding: 15px;
+        border-radius: 10px 10px 0 0;
+        margin: -20px -20px 20px -20px;
+        font-size: 18px;
+    }
+
+    button {
+        background-color: #8b4513;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #5c3317;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="text"], textarea, input[type="url"], input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #3e2723;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    form {
+        margin: 0;
+    }
+</style>
+
+<div class="content">
+    <div class="admin-container">
+        <div class="admin-content">
+            <h2 class="section-title">Add Playlist Upload Name</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ playlist_form.as_p }}
+                <button type="submit">Add Playlist</button>
+            </form>
+        </div>
+
+        <div class="admin-content">
+            <h2 class="section-title">Upload MP3 File</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ uploaded_file_form.as_p }}
+                <button type="submit">Add Uploaded File</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="admin-content">
+            <h2 class="section-title">Add Spotify Playlist</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ spotify_playlist_form.as_p }}
+                <button type="submit">Add Spotify Playlist</button>
+            </form>
+        </div>
+
+        <div class="admin-content">
+            <h2 class="section-title">Add Youtube Playlist</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ youtube_playlist_form.as_p }}
+                <button type="submit">Add Youtube Playlist</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

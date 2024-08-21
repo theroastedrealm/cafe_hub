@@ -1,0 +1,20 @@
+{% load static %}
+
+<nav>
+    <div class="navbar-container">
+        {% url 'upload' as upload_url %}
+        <a href="{{ upload_url }}" class="nav-button">
+            <img class="nav-logo upload-logo" src="{% static 'css/images/Upload-logo.png' %}" alt="Upload">
+        </a>
+
+        {% url 'playlist' as playlist_url %}
+        <a href="{{ playlist_url }}" class="nav-button">
+            <img class="nav-logo youtube-logo" src="{% static 'css/images/Youtube-logo.png' %}" alt="YouTube">
+        </a>
+   
+        {% url 'spotify' as spotify_url %}
+        <a href="{{ spotify_url }}" class="nav-button">
+            <img class="nav-logo spotify-logo" src="{% static 'css/images/Spotify-logo.png' %}" alt="Spotify">
+        </a>
+    </div>
+</nav>

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="column">
+    <h1>Your Spotify Playlists</h1>
+</div>
+
+
+<div class="playlists-container">
+    {% if playlists %}
+    <div>
+        {% for playlist in playlists %}
+            <div class="playlist">
+                <h3>
+                    <a href="{{ playlist.url }}" target="_blank">{{ playlist.name }}</a>
+                </h3>
+                <!-- Embed the Spotify playlist player using an iframe -->
+                <iframe src="https://open.spotify.com/embed/playlist/{{ playlist.id }}" 
+                        width="300" height="380" 
+                        frameborder="0" allowtransparency="true" allow="encrypted-media">
+                </iframe>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <!-- Styled red box for "No playlists found" message -->
+        <div style="
+            display: inline-block;
+            padding: 20px;
+            font-size: 1.2em; /* Adjust font size as needed */
+            font-weight: bold; /* Make text bold */
+            color: #d9534f; /* Red text color */
+            background-color: #f2dede; /* Light red background */
+            border: 1px solid #d9534f; /* Red border */
+            border-radius: 5px;
+            text-align: center; /* Center-align text */
+            margin: 20px auto; /* Center the box and add margin */
+        ">
+            <p>No Playlists Were Found</p>
+        </div>
+    {% endif %}
+</div>
+
+<div class="left-side">
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+    <img src="{% static 'css/images/coffee-bean.png' %}" alt="Left Image" />
+
+</div>
+
+
+{% endblock %}
