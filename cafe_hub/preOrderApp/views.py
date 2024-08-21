@@ -23,6 +23,10 @@ def admin_page(request):
             category_id = request.POST.get('category_id')
             category = Category.objects.get(id=category_id)
             Item.objects.create(name=item_name, category=category,branch=branch)
+        elif 'delete_item' in request.POST:
+            item_id = request.POST.get('item_id')
+            item = Item.objects.get(id=item_id, category__branch=branch)
+            item.delete()
         elif 'confirm_order' in request.POST:
             order_id = request.POST.get('order_id')
             order = Order.objects.get(id=order_id)
@@ -40,7 +44,8 @@ def admin_page(request):
     
     categories = Category.objects.filter(branch=branch)
     orders = Order.objects.filter(branch=branch)
-    return render(request, 'customer/admin_page.html', {'categories': categories, 'orders': orders})
+    items= Item.objects.filter(branch=branch)
+    return render(request, 'customer/admin_page.html', {'categories': categories, 'orders': orders,'items':items})
 
 @login_required
 def menu_page(request):

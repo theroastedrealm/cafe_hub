@@ -1,0 +1,175 @@
+{% load static %}
+
+{% block header %}
+    <div style="background-color: #8b4513; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 43px;">
+        Playlist Dashboard
+    </div>
+{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #f1e0b5; /* Background color for the entire page */
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .admin-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+    }
+
+    .admin-content {
+        background-color: white; /* Background color for content sections */
+        padding: 20px;
+        width: 48%;
+        border: 1px solid #3e2723;
+        border-radius: 10px;
+        text-align: center;
+        margin: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .admin-content:hover {
+        transform: scale(1.02);
+    }
+
+    .section-title {
+        background-color: #8b4513;
+        color: white;
+        padding: 15px;
+        border-radius: 10px 10px 0 0;
+        margin: -20px -20px 20px -20px;
+        font-size: 18px;
+    }
+
+    .iframe-player {
+        width: 100%;
+        height: 315px; /* Adjust as needed */
+        border: none;
+    }
+
+    .playlist {
+        list-style: none;
+        padding: 0;
+        text-align: left; /* Left-align text inside list items */
+        margin: 20px auto; /* Center the playlist container and add margin */
+    }
+
+    .playlist-item {
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .playlist-item:hover {
+        background-color: #f0e4d7;
+    }
+
+    #current-track-name {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="content">
+    <div class="admin-container">
+        <div class="admin-content">
+            <h2 class="section-title">Spotify Playlists</h2>
+            {% for playlist in spotify_playlists %}
+                <div class="playlist-item">
+                    <h4>{{ playlist.name }}</h4>
+                    <iframe class="iframe-player" src="{{ playlist.embed_url }}" allowfullscreen></iframe>
+                </div>
+            {% empty %}
+                <p>No Spotify playlists available.</p>
+            {% endfor %}
+        </div>
+
+        <div class="admin-content">
+            <h2 class="section-title">YouTube Playlists</h2>
+            {% for playlist in youtube_playlists %}
+                <div class="playlist-item">
+                    <h4>{{ playlist.name }}</h4>
+                    <iframe class="iframe-player" src="{{ playlist.embed_url }}" allowfullscreen></iframe>
+                </div>
+            {% empty %}
+                <p>No YouTube playlists available.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="admin-content">
+            <h2 class="section-title">Uploaded MP3 Files</h2>
+            {% if uploaded_files %}
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="display: inline-block; text-align: center; margin: 20px auto;">
+                        <audio id="audio-player" controls style="display: block; margin: 0 auto;">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div id="current-track-name" style="font-weight: bold; margin-top: 10px;">
+                            <span id="now-playing">Now Playing: </span><span id="current-track-name-text"></span>
+                        </div>
+                        <ul id="playlist" style="list-style-type: none; padding: 0; text-align: left; margin: 20px auto;">
+                            {% for file in uploaded_files %}
+                                <li data-src="{{ file.file_link }}" data-name="{{ file.name }}" style="cursor: pointer; margin-bottom: 10px;">
+                                    {{ file.name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                <p>No MP3 files available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var audioPlayer = document.getElementById('audio-player');
+        var playlist = document.getElementById('playlist');
+        var currentTrackName = document.getElementById('current-track-name-text');
+        var tracks = playlist.getElementsByTagName('li');
+        var currentTrack = 0;
+
+        function playTrack(index) {
+            var track = tracks[index];
+            audioPlayer.src = track.getAttribute('data-src');
+            currentTrackName.textContent = track.getAttribute('data-name');
+            audioPlayer.play();
+        }
+
+        // Automatically play the next track when the current track ends
+        audioPlayer.addEventListener('ended', function() {
+            currentTrack++;
+            if (currentTrack < tracks.length) {
+                playTrack(currentTrack);
+            }
+        });
+
+        // Allow user to click on a track to play it
+        for (var i = 0; i < tracks.length; i++) {
+            (function(index) {
+                tracks[index].addEventListener('click', function() {
+                    currentTrack = index;
+                    playTrack(index);
+                });
+            })(i);
+        }
+
+        // Start by playing the first track
+        if (tracks.length > 0) {
+            playTrack(0);
+        }
+    });
+</script>
+
+{% endblock %}

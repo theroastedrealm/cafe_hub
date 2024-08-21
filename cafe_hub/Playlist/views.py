@@ -6,38 +6,51 @@ from django.urls import reverse
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
-from .models import Uploaded_file
 import requests
+from django.shortcuts import render
+from django.contrib import messages
+from .models import Uploaded_file, Playlist
+
+
 
 
 
 def index(request):
     return render(request, 'index.html')
 
-def about(request):
-    return render(request, 'about.html')
 
-def contact(request):
-    return render(request, 'contact.html')
 
 #File Upload
-from .models import Uploaded_file
-
 def upload(request):
     uploaded_files = []
     if request.method == 'POST' and request.FILES.getlist('documents'):
         files = request.FILES.getlist('documents')
-        file_save = FileSystemStorage()
-        for file in files:
-            saved_file = file_save.save(file.name, file)
-            file_url = file_save.url(saved_file)
-            uploaded_files.append(file_url)  # Store file URLs
+        playlist_name = request.POST.get('playlist_name')
 
-            # Save file details to the database
-            Uploaded_file.objects.create(
-                name=file.name,
-                file_link=file_url,
-            )
+        if len(files) > 3:
+            messages.error(request, "You can only upload a maximum of 3 files. Please Try Again :)")
+        elif len(files) == 0:
+            messages.error(request, "No files were attached. Please Try Again :)")
+        else:
+            file_save = FileSystemStorage()
+            playlist = Playlist.objects.create(name=playlist_name)
+
+            for file in files:
+                saved_file = file_save.save(file.name, file)
+                file_url = file_save.url(saved_file)
+                uploaded_files.append({
+                    'name': file.name,  # Store file name
+                    'url': file_url,    # Store file URL
+                })
+
+                # Save file details to the database with associated playlist
+                Uploaded_file.objects.create(
+                    name=file.name,
+                    file_link=file_url,
+                    playlist=playlist
+                )
+
+            messages.success(request, f'Playlist "{playlist_name}" created successfully!')
 
     return render(request, 'upload.html', {'uploaded_files': uploaded_files})
 
@@ -181,10 +194,15 @@ import json
 import os
 from datetime import datetime, timedelta
 from .models import SpotifyPlaylist
+from django.utils import timezone
+import requests
 from .models import YoutubePlaylist
+from django.http import HttpResponse
+import time
 
 
-# Load credentials from JSON file
+
+# Load Spotify credentials from the file
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 with open(os.path.join(BASE_DIR, 'spotify_credentials.json')) as f:
     credentials = json.load(f)
@@ -192,95 +210,165 @@ with open(os.path.join(BASE_DIR, 'spotify_credentials.json')) as f:
 SPOTIFY_CLIENT_ID = credentials['SPOTIFY_CLIENT_ID']
 SPOTIFY_CLIENT_SECRET = credentials['SPOTIFY_CLIENT_SECRET']
 SPOTIFY_REDIRECT_URI = credentials['SPOTIFY_REDIRECT_URI']
-# Define Spotify scopes as a constant
 SPOTIFY_SCOPES = 'user-read-playback-state user-modify-playback-state playlist-read-private'
 
 def spotify_login(request):
-    sp_oauth = SpotifyOAuth(
-        client_id=SPOTIFY_CLIENT_ID,
-        client_secret=SPOTIFY_CLIENT_SECRET,
-        redirect_uri=SPOTIFY_REDIRECT_URI,
-        scope=SPOTIFY_SCOPES
+    auth_url = (
+        f"https://accounts.spotify.com/authorize?response_type=code"
+        f"&client_id={SPOTIFY_CLIENT_ID}"
+        f"&redirect_uri={SPOTIFY_REDIRECT_URI}"
+        f"&scope={SPOTIFY_SCOPES}"
     )
-    auth_url = sp_oauth.get_authorize_url()
     return redirect(auth_url)
 
+
 def callback(request):
-    sp_oauth = SpotifyOAuth(
-        client_id=SPOTIFY_CLIENT_ID,
-        client_secret=SPOTIFY_CLIENT_SECRET,
-        redirect_uri=SPOTIFY_REDIRECT_URI,
-        scope=SPOTIFY_SCOPES
-    )
     code = request.GET.get('code')
-    token_info = sp_oauth.get_access_token(code)
-    request.session['token_info'] = token_info
+    if not code:
+        return HttpResponse('Error: No code provided', status=400)
+
+    token_url = 'https://accounts.spotify.com/api/token'
+    token_data = {
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': SPOTIFY_REDIRECT_URI,
+        'client_id': SPOTIFY_CLIENT_ID,
+        'client_secret': SPOTIFY_CLIENT_SECRET,
+    }
+    token_response = requests.post(token_url, data=token_data)
+    token_json = token_response.json()
+
+    access_token = token_json.get('access_token')
+    refresh_token = token_json.get('refresh_token')
+    expires_in = token_json.get('expires_in')
+
+    if not access_token:
+        return HttpResponse(f"Error: Unable to retrieve access token. Response: {token_json}", status=400)
+
+    # Store the tokens and expiration time in the session
+    request.session['spotify_access_token'] = access_token
+    request.session['spotify_refresh_token'] = refresh_token
+    request.session['spotify_token_expires_at'] = time.time() + expires_in
+
     return redirect('spotify_playlists')
 
+
+def refresh_access_token(request):
+    refresh_token = request.session.get('spotify_refresh_token')
+    if not refresh_token:
+        return False
+
+    token_url = 'https://accounts.spotify.com/api/token'
+    token_data = {
+        'grant_type': 'refresh_token',
+        'refresh_token': refresh_token,
+        'client_id': SPOTIFY_CLIENT_ID,
+        'client_secret': SPOTIFY_CLIENT_SECRET,
+    }
+    token_response = requests.post(token_url, data=token_data)
+    token_json = token_response.json()
+
+    access_token = token_json.get('access_token')
+    expires_in = token_json.get('expires_in')
+
+    if not access_token:
+        return False
+
+    # Update session with new access token and expiration time
+    request.session['spotify_access_token'] = access_token
+    request.session['spotify_token_expires_at'] = time.time() + expires_in
+
+    return True
+
 def spotify_playlists(request):
-    token_info = request.session.get('token_info')
-    if not token_info or is_token_expired(token_info):
+    access_token = request.session.get('spotify_access_token')
+    token_expires_at = request.session.get('spotify_token_expires_at')
+
+    if token_expires_at and time.time() > token_expires_at:
+        refreshed = refresh_access_token(request)
+        if not refreshed:
+            return redirect('spotify')
+        access_token = request.session.get('spotify_access_token')
+
+    if not access_token:
         return redirect('spotify')
-    
-    sp = spotipy.Spotify(auth=token_info['access_token'])
-    playlists_data = sp.current_user_playlists()
-    
-    playlists = []
-    for playlist in playlists_data['items']:
-        tracks = sp.playlist_tracks(playlist['id'])
-        track_uris = [track['track']['uri'] for track in tracks['items']]
-        playlists.append({
-            'id': playlist['id'],
-            'name': playlist['name'],
-            'external_urls': playlist['external_urls'],
-            'tracks': track_uris
-        })
-    
-    # Save playlists to the database
-    save_playlists_to_db(playlists)
-    
-    return render(request, 'spotify.html', {'playlists': playlists, 'access_token': token_info['access_token']})
 
-def is_token_expired(token_info):
-    # Check if the token has expired
-    expiration_time = datetime.fromtimestamp(token_info['expires_at'])
-    return datetime.now() > expiration_time
+    # Fetch fresh playlist data from Spotify's API
+    playlist_url = 'https://api.spotify.com/v1/me/playlists'
+    headers = {
+        'Authorization': f'Bearer {access_token}'
+    }
+    playlist_response = requests.get(playlist_url, headers=headers)
 
-def refresh_access_token(sp_oauth, refresh_token):
-    token_info = sp_oauth.refresh_access_token(refresh_token)
-    return token_info
+    print(f"Status Code: {playlist_response.status_code}")
+    print(f"Response Text: {playlist_response.text}")
 
-def get_access_token(request):
-    token_info = request.session.get('token_info')
-    return JsonResponse({'access_token': token_info['access_token']})
+    if playlist_response.status_code != 200:
+        return HttpResponse(f"Error: Spotify API returned status code {playlist_response.status_code}. Response: {playlist_response.text}", status=playlist_response.status_code)
 
-def save_playlists_to_db(playlists):
+    try:
+        playlist_json = playlist_response.json()
+    except json.JSONDecodeError as e:
+        return HttpResponse(f"Error decoding JSON: {e}", status=500)
+
+    playlists = playlist_json.get('items', [])
+    playlist_data = []
+
     for playlist in playlists:
-        SpotifyPlaylist.objects.create(
-            name=playlist['name'],
-            link=playlist['external_urls']['spotify']
+        playlist_id = playlist['uri'].split(':')[-1]
+        playlist_name = playlist['name']
+        playlist_url = playlist['external_urls']['spotify']
+
+        # Update the database to reflect any changes
+        SpotifyPlaylist.objects.update_or_create(
+            link=playlist_url,
+            defaults={
+                'name': playlist_name,
+                'date_created': timezone.now()
+            }
         )
 
-
-def spotify_logout(request):
-    token_info = request.session.get('token_info')
+        playlist_data.append({
+            'name': playlist_name,
+            'id': playlist_id,
+            'url': playlist_url
+        })
     
-    if token_info:
-        access_token = token_info.get('access_token')
-        if access_token:
-            try:
-                # Revoke the token on Spotify's side (Note: Spotify doesn't provide a direct revoke endpoint for access tokens)
-                # Here, you can simulate the revocation or simply delete the session data
-                
-                print("Token will be revoked (not actually possible via Spotify API).")
-            except requests.RequestException as e:
-                print(f"Error: {e}")
-        
-        # Clear Spotify token from session
-        del request.session['token_info']
+    context = {'playlists': playlist_data}
+    return render(request, 'spotify.html', context)
 
-    # Clear all session data
-    request.session.flush()
 
-    # Redirect to the index page (or wherever you prefer)
-    return redirect('index')  # Adjust the redirect URL as needed
+######Admin Page#######
+# views.py
+from django.shortcuts import render
+from .models import SpotifyPlaylist, YoutubePlaylist, Uploaded_file
+
+def admin_homepage(request):
+    spotify_playlists = SpotifyPlaylist.objects.all()
+    youtube_playlists = YoutubePlaylist.objects.all()
+    playlists = Playlist.objects.all()  # Fetch all playlists
+    uploaded_files = Uploaded_file.objects.all()
+
+    # Group files by playlist
+    playlist_files = {playlist.id: Uploaded_file.objects.filter(playlist=playlist) for playlist in playlists}
+
+
+    # Process Spotify playlist links
+    for playlist in spotify_playlists:
+        playlist.embed_url = f"https://open.spotify.com/embed/playlist/{playlist.link.split('/')[-1]}"
+
+    # Process YouTube playlist links
+    for playlist in youtube_playlists:
+        playlist_id = playlist.link.split('list=')[-1]
+        playlist.embed_url = f"https://www.youtube.com/embed/?listType=playlist&list={playlist_id}"
+
+    context = {
+
+        'spotify_playlists': spotify_playlists,
+        'youtube_playlists': youtube_playlists,
+        'uploaded_files': uploaded_files,
+        'playlist_files': playlist_files,  # Add this to the context
+        'playlists': playlists,            # Also add playlists to context
+    }
+
+    return render(request, 'admin_homepage.html', context)
