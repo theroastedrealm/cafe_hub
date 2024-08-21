@@ -1,3 +1,4 @@
 from django.contrib import admin
+from productService.models import ProductService
 
-# Register your models here.
+admin.site.register(ProductService)
