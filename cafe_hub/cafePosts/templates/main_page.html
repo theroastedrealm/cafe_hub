@@ -1,0 +1,59 @@
+{% extends 'cafe_post_base.html' %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      {% for post in posts %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">{{ post.title }}</h2>
+          <p class="card-text">{{ post.content }}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <small class="text-muted"
+              >Posted by {{ post.author.username }} on {{ post.created_at
+              }}</small
+            >
+            <a
+              href="#"
+              class="btn btn-primary"
+              data-toggle="collapse"
+              data-target="#comments-{{ post.id }}"
+              >Comments ({{ post.comments.count }})</a
+            >
+          </div>
+          <div id="comments-{{ post.id }}" class="collapse">
+            {% for comment in post.comments.all %}
+            <div class="card mt-2">
+              <div class="card-body">
+                <p>{{ comment.content }}</p>
+                <small class="text-muted"
+                  >Comment by {{ comment.author.username }} on {{
+                  comment.created_at }}</small
+                >
+              </div>
+            </div>
+            {% endfor %}
+            <form method="post" action="{% url 'add_comment' post.id %}">
+              {% csrf_token %}
+              <div class="form-group mt-2">
+                <input
+                  type="text"
+                  name="content"
+                  class="form-control"
+                  placeholder="Add a comment..."
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Comment</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-md-4">
+      <a href="{% url 'create_post' %}" class="btn btn-success btn-block"
+        >Create Post</a
+      >
+    </div>
+  </div>
+</div>
+{% endblock %}

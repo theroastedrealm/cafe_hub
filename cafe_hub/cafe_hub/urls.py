@@ -26,6 +26,7 @@ urlpatterns = [
     path('products_services/', include('productService.urls')),
     path('specials/', include('specials.urls')),
     path('choiceproducts/', include('choiceProducts.urls')),
+    path('cafePosts/', include('cafePosts.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += generate_branch_admin_urls()
