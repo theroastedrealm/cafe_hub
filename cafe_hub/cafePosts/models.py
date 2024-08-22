@@ -29,6 +29,6 @@ class UserProfile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     profile_pic = models.ImageField(default='default.jpg', upload_to='profile_pics/')
     created_at = models.DateTimeField(auto_now_add=True)
-    
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=False, blank=False, default=1)
     def __str__(self):
         return self.user.username
