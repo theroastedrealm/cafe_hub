@@ -8,35 +8,87 @@
         background-color: #f1e0b5;
         margin: 0;
         font-family: Roboto, sans-serif;
-        align-items: center;
-        display: flex;
-        height: 100vh;
-        align-items: center;
       }
+
       .main-content {
         display: flex;
-        border-radius: 8px;
-        padding: 20px;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 30px;
+        width: 2000px;
       }
       .left-side {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+    padding: 20px;
+    background-color: #f1e0b5;
+    position: fixed; 
+    left: 0;     
+}
 
-        padding: 20px;
-        background-color: #f1e0b5;
-      }
-
-      .left-side img {
-        display: block;
-        margin-bottom: 10px;
-        width: 50px;
-      }
-      .form_container {
+.left-side img {
+    display: block;
+    margin-bottom: 10px;
+    width: 80px;
+    height: auto;
+}   
+      .form-container {
+        
         display: flex;
         justify-content: center;
         flex-direction: column;
-
-        padding: 20px;
+        padding: 50px;
+        background-color: #fff8dc;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 100px;
+       padding-left:100px ;
+       padding-right: 100px;
       }
+      .form-container h2 {
+        margin-top: 0;
+      }
+      .create-branch-btn{
+        background-color: #8b4513;
+        color: white;
+        border: none;
+        padding: 10px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        margin:5px;
+        font-size: 14px;
+        
+        border: 1px solid black; 
+    }
+    .create-branch-btn:hover{
+        background-color: #5c3317;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .right-side {
+    display: flex;
+    
+    background-color: #f1e0b5;
+    
+    align-self: flex-end;
+    padding: 20px;
+    position: relative; 
+    top: 120px; 
+    right:0;
+    
+}
+
+.right-side img {
+    display: block;
+    margin-bottom: 10px;
+    width: 200px;
+    height: auto;
+    margin-top: 500px;
+}
     </style>
   </head>
   <body>
@@ -51,14 +103,17 @@
         <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
         <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
         <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
-    </div>>
+      </div>
       <div class="form-container">
         <h1>Create a New Branch</h1>
         <form method="post">
           {% csrf_token %} {{ form.as_p }}
-          <button type="submit">Create Branch</button>
+          <button class="create-branch-btn" type="submit">Create Branch</button>
         </form>
       </div>
+      <div class="right-side">
+        <img src="{% static 'main/images/pile-of-beans.png' %}" alt="Right Image"/>
+    </div>
     </div>
   </body>
 </html>
