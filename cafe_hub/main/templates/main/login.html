@@ -4,7 +4,7 @@
 
 <style>
     body {
-        background-image: url("{% static 'main/images/background5.jpg' %}");
+        background-color:#e3c29b;
         background-size: cover; 
         background-position : center; 
         height: 100vh; 
@@ -18,10 +18,12 @@
         display: flex; 
         justify-content: space-between; 
         width: 50%;
+        
     }
     .login{
         flex: 1; 
         margin-right: 20px;
+        position: relative;
     }
     .content-container{
         flex: 1;
@@ -58,9 +60,59 @@
         
         border: 1px solid black; 
     }
+    .btn:hover, .login-btn:hover{
+        background-color: #5c3317;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .results-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 20px;
+        max-width: 500px;
+        
+    }
+
+    .result-item {
+        width:200px
+    }
+    .left-side ,.right-side{
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+    padding: 20px;
+    background-color: #e3c29b;
+    position: fixed;      
+}
+  
+.left-side img,.right-side img {
+    display: block;
+    margin-bottom: 10px;
+    width: 80px;
+    height: auto;
+}   
+    
+.left-side {
+        left: 0;
+    }
+
+    .right-side {
+        right: 0;
+    }
 </style>
 
 <div class="content">
+    <div class="left-side">
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+    </div>
     <div class="login">
         <form method="post"> 
             {% csrf_token %}
@@ -98,19 +150,31 @@
             {% if zip_code_query %}, {{ zip_code_query }}{% endif %}":</h2>
 
 
-        <ul>
-            {% for branch in results %}
-            <li>
-                <h3>{{ branch.name }}</h3>
-                <p><strong>Address:</strong> {{ branch.address }}</p>
-                <p><strong>City:</strong> {{ branch.city }}</p>
-                <p><strong>Zip Code:</strong> {{ branch.zip_code }}</p>
-            </li>
-            {% empty %}
-                <li>No coffee shops found.</li>
-            {% endfor %} 
-        </ul>
+            <div class="results-container">
+                {% for branch in results %}
+                <div class="result-item">
+                    <h3>{{ branch.name }}</h3>
+                    <p><strong>Address:</strong> {{ branch.address }}</p>
+                    <p><strong>City:</strong> {{ branch.city }}</p>
+                    <p><strong>Zip Code:</strong> {{ branch.zip_code }}</p>
+                </div>
+                {% empty %}
+                    <p>No coffee shops found.</p>
+                {% endfor %}
+            </div>
         <p>Can't find the Coffee Shop? <a href="{% url 'branches' %}">View all Coffee Shops</a></p>    
+    </div>
+
+    <div class="right-side">
+        <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
+            <img src="{% static 'main/images/coffee-bean.png' %}" alt="Coffee Bean">
     </div>
 </div>
 {% endblock content %}
