@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 def main_page(request):
-    posts = Post.objects.all().order_by('-created_at')
+    branch = request.user.branch
+    posts = Post.objects.filter(branch=branch).order_by('-created_at')
     return render(request, 'main_page.html', {'posts': posts})
 
 
@@ -24,11 +25,13 @@ def create_profile(request):
 
 @login_required
 def create_post(request):
+    branch = request.user.branch
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            post.branch = branch
             post.save()
             return redirect('main_page')
     else:
@@ -41,7 +44,7 @@ def profile_page(request):
     except UserProfile.DoesNotExist:
         return redirect('create_profile')  
 
-    posts = Post.objects.filter(author=request.user)
+    posts = Post.objects.filter(author=request.user, branch=profile.branch)
     return render(request, 'profile_page.html', {'profile': profile, 'posts': posts})
 
 @login_required
@@ -91,5 +94,5 @@ def add_comment(request, post_id):
 
 def user_posts(request, user_id):
     user_profile = get_object_or_404(UserProfile, user_id=user_id)
-    posts = Post.objects.filter(author=user_profile.user).order_by('-created_at')
+    posts = Post.objects.filter(author=user_profile.user, branch=user_profile.branch).order_by('-created_at')
     return render(request, 'user_posts.html', {'user_profile': user_profile, 'posts': posts})
