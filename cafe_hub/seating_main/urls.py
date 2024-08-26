@@ -5,7 +5,7 @@ from seating_main import views as v
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    
     
     path('', v.homepage, name="seating_homepage"),
     path('update_seat_availability/<int:seat_id>', v.update_seat_availability, name="update_seat_availability"),

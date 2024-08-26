@@ -1,3 +1,4 @@
+import sys
 from django.apps import AppConfig
 
 
@@ -6,6 +7,6 @@ class MainConfig(AppConfig):
     name = 'main'
 
     def ready(self):
-        pass
+        import main.signals
     
     

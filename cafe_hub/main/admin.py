@@ -42,11 +42,7 @@ class CustomUserAdmin(admin.ModelAdmin):
         # Restrict other users to only see their own branch
         return qs.filter(branch=request.user.branch)
 
-group, created = Group.objects.get_or_create(name='admin')
-group, created = Group.objects.get_or_create(name='uber-user')
-group, created = Group.objects.get_or_create(name='customer')
 
-group.save()
 
 class BranchAdminSite(AdminSite):
     site_header = "Coffee Shop Admin"

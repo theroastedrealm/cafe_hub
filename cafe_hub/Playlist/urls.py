@@ -25,7 +25,7 @@ from django.urls import path
 from .import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+   
     path('', views.index, name='playlist_index'),
     path('upload/', views.upload, name='upload'),
     path('youtube_auth/', views.youtube_auth, name='youtube_auth'),

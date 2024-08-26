@@ -5,7 +5,7 @@ from specials import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    
     
     path('', views.homepage, name="specials_homepage"),
     path('create/', views.create_special, name="create_special"),
