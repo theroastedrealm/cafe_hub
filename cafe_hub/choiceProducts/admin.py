@@ -12,8 +12,8 @@ class choiceProductsAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         
-        if request.user.branch:
-            return qs.filter(id=request.user.branch.id)
+        elif hasattr(request.user, 'branch'):
+            return qs.filter(branch=request.user.branch)
         else:
             return qs.none()
 

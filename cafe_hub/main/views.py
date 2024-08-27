@@ -25,6 +25,8 @@ def login_view(request):
             login(request, user)
             if get_user_role(user)== 'customer':
                 next_url = request.GET.get('next', 'search')
+            elif get_user_role(user)=='uber-user':
+                next_url = request.GET.get('next','admin:login')
             else:
                 next_url = '/'
             return redirect(next_url)
